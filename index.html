@@ -1,0 +1,1607 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>शाखा पुस्तिका / Shakha Pustika</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Tiro+Devanagari+Hindi&family=Baloo+2:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://accounts.google.com/gsi/client" async defer></script>
+<style>
+  :root{
+    --cream:#FBF5E9; --paper:#FFFDF8; --saffron:#C1440E; --saffron-deep:#96350A;
+    --indigo:#20283F; --indigo-soft:#4A5471; --gold:#C9982E; --sage:#3F7A57; --sage-bg:#E7F1E9;
+    --rose:#A8324A; --rose-bg:#F7E7E9; --line:#E6DAC4; --sidebar-text:#C7CEE3; --sidebar-hover:rgba(255,255,255,0.08);
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  #srApp{ font-family:'Inter',sans-serif; background:var(--cream); color:var(--indigo); min-height:100vh; -webkit-font-smoothing:antialiased; }
+  #srApp h1,#srApp h2,#srApp h3,.sr-devnag{font-family:'Tiro Devanagari Hindi','Baloo 2',serif;}
+  .sr-shell{display:flex;min-height:100vh;position:relative;}
+  .sr-sidebar{ width:232px;flex-shrink:0;background:var(--indigo);color:var(--sidebar-text); display:flex;flex-direction:column;padding:20px 14px; position:sticky;top:0;height:100vh;overflow-y:auto;z-index:30; }
+  .sr-sidebar-close{display:none;}
+  .sr-brand{display:flex;align-items:center;gap:10px;padding:4px 6px 14px;border-bottom:1px solid rgba(255,255,255,0.08);margin-bottom:14px;}
+  .sr-brand-mark{width:36px;height:36px;border-radius:10px;background:var(--saffron);color:#fff;display:flex;align-items:center;justify-content:center;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:17px;flex-shrink:0;}
+  .sr-brand-title{font-family:'Tiro Devanagari Hindi',serif;font-size:16px;color:#fff;line-height:1.25;}
+  .sr-brand-sub{font-size:10.5px;color:var(--sidebar-text);opacity:0.75;letter-spacing:0.3px;}
+  .sr-lang-toggle{display:flex;background:rgba(255,255,255,0.08);border-radius:20px;padding:3px;margin-bottom:14px;}
+  .sr-lang-toggle button{flex:1;border:none;background:transparent;padding:6px 10px;border-radius:18px;cursor:pointer;font-size:12.5px;font-weight:600;color:var(--sidebar-text);font-family:'Inter',sans-serif;transition:all .2s;}
+  .sr-lang-toggle button.active{background:var(--saffron);color:#fff;}
+  .sr-nav{display:flex;flex-direction:column;gap:3px;flex:1;}
+  .sr-nav-item{ display:flex;align-items:center;gap:10px;text-align:left; background:none;border:none;color:var(--sidebar-text); padding:10px 12px;border-radius:9px;font-size:14px;font-weight:500; cursor:pointer;font-family:'Inter',sans-serif;width:100%; }
+  .sr-nav-item span{font-family:'Tiro Devanagari Hindi','Inter',sans-serif;}
+  .sr-nav-item:hover{background:var(--sidebar-hover);color:#fff;}
+  .sr-nav-item.active{background:var(--saffron);color:#fff;}
+  .sr-nav-item:focus-visible{outline:2px solid var(--gold);outline-offset:2px;}
+  .sr-sidebar-bottom{margin-top:14px;padding-top:14px;border-top:1px solid rgba(255,255,255,0.08);font-size:12px;}
+  .sr-head-box{display:flex;align-items:center;gap:9px;}
+  .sr-head-label{font-size:10px;text-transform:uppercase;letter-spacing:0.4px;opacity:0.65;margin-bottom:5px;}
+  .sr-head-name{color:#fff;font-weight:600;font-size:13px;}
+  .sr-head-empty{font-size:12px;color:var(--sidebar-text);line-height:1.5;}
+  .sr-head-link{color:var(--gold);text-decoration:underline;cursor:pointer;background:none;border:none;font-size:inherit;padding:0;font-family:'Inter',sans-serif;}
+  .sr-org-box{background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:10px 12px;margin-bottom:14px;font-size:12px;}
+  .sr-org-row{display:flex;justify-content:space-between;gap:8px;padding:3px 0;color:var(--sidebar-text);}
+  .sr-org-row b{color:#fff;font-weight:600;font-family:'Tiro Devanagari Hindi','Inter',sans-serif;text-align:right;}
+  .sr-org-empty{color:var(--sidebar-text);opacity:0.75;line-height:1.5;}
+  .sr-org-edit-link{color:var(--gold);text-decoration:underline;cursor:pointer;background:none;border:none;font-size:11.5px;padding:0;font-family:'Inter',sans-serif;margin-top:6px;display:inline-block;}
+  .sr-org-form .sr-field{margin-bottom:8px;}
+  .sr-org-form .sr-field label{color:var(--sidebar-text);font-size:10.5px;margin-bottom:3px;}
+  .sr-org-form .sr-field input{padding:7px 9px;font-size:13px;}
+  .sr-org-form-actions{display:flex;gap:8px;margin-top:4px;}
+  .sr-org-form-actions .sr-btn{padding:7px 12px;font-size:12.5px;}
+  .sr-overlay{display:none;position:fixed;inset:0;background:rgba(20,24,38,0.5);z-index:25;}
+  .sr-overlay.show{display:block;}
+  .sr-main{flex:1;min-width:0;}
+  .sr-topbar{ display:none;align-items:center;gap:12px;background:var(--paper); border-bottom:1px solid var(--line);padding:14px 16px;position:sticky;top:0;z-index:20; }
+  .sr-hamburger{background:none;border:1px solid var(--line);border-radius:8px;width:36px;height:36px;font-size:16px;cursor:pointer;color:var(--indigo);flex-shrink:0;}
+  .sr-topbar-title{font-family:'Tiro Devanagari Hindi',serif;font-size:16px;font-weight:600;}
+  .sr-content{max-width:820px;margin:0 auto;padding:26px 22px 60px;}
+  @media (max-width:820px){
+    .sr-sidebar{position:fixed;left:0;top:0;transform:translateX(-100%);transition:transform .2s ease;box-shadow:6px 0 24px rgba(0,0,0,0.18);}
+    .sr-sidebar.open{transform:translateX(0);}
+    .sr-sidebar-close{display:block;position:absolute;top:14px;right:14px;color:#fff;opacity:0.7;cursor:pointer;font-size:16px;background:none;border:none;}
+    .sr-topbar{display:flex;}
+    .sr-content{padding:20px 16px 50px;}
+  }
+  .sr-card{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:18px;margin-bottom:16px;box-shadow:0 1px 3px rgba(32,40,63,0.05);}
+  .sr-card h2{font-size:18px;margin:0 0 14px;color:var(--indigo);}
+  .sr-field{margin-bottom:12px;}
+  .sr-field label{display:block;font-size:12px;font-weight:600;color:var(--indigo-soft);margin-bottom:5px;text-transform:uppercase;letter-spacing:0.4px;}
+  .sr-field input,.sr-field select,.sr-field textarea{ width:100%;padding:10px 12px;border:1px solid var(--line);border-radius:9px; font-size:14.5px;font-family:'Inter',sans-serif;background:#fff;color:var(--indigo); }
+  .sr-field textarea{resize:vertical;min-height:64px;}
+  .sr-field input:focus-visible,.sr-field select:focus-visible,.sr-field textarea:focus-visible{outline:2px solid var(--gold);outline-offset:1px;border-color:var(--gold);}
+  .sr-row2{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+  @media (max-width:480px){.sr-row2{grid-template-columns:1fr;}}
+  .sr-btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;background:var(--saffron);color:#fff;border:none;padding:11px 18px;border-radius:9px;font-weight:600;font-size:14px;cursor:pointer;font-family:'Inter',sans-serif;}
+  .sr-btn:hover{background:var(--saffron-deep);}
+  .sr-btn:focus-visible{outline:2px solid var(--gold);outline-offset:2px;}
+  .sr-btn.secondary{background:transparent;color:var(--indigo-soft);border:1px solid var(--line);}
+  .sr-btn.secondary:hover{background:#f3ede0;}
+  .sr-btn:disabled{opacity:0.55;cursor:not-allowed;}
+  .sr-member{display:flex;align-items:center;gap:12px;padding:12px 4px;border-bottom:1px solid var(--line);}
+  .sr-member:last-child{border-bottom:none;}
+  .sr-avatar{width:38px;height:38px;border-radius:50%;background:var(--indigo);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px;flex-shrink:0;font-family:'Baloo 2',sans-serif;}
+  .sr-member-info{flex:1;min-width:0;}
+  .sr-member-name{font-weight:600;font-size:14.5px;color:var(--indigo);}
+  .sr-member-meta{font-size:12.5px;color:var(--indigo-soft);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .sr-member-actions{display:flex;gap:6px;flex-shrink:0;}
+  .sr-icon-btn{background:none;border:1px solid var(--line);border-radius:7px;width:30px;height:30px;display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--indigo-soft);flex-shrink:0;}
+  .sr-icon-btn:hover{background:#f3ede0;}
+  .sr-icon-btn:focus-visible{outline:2px solid var(--gold);}
+  .sr-star-btn{background:none;border:1px solid var(--line);border-radius:7px;width:30px;height:30px;display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--gold);font-size:15px;flex-shrink:0;}
+  .sr-star-btn.on{background:#FBF0D9;border-color:var(--gold);}
+  .sr-star-btn:hover{background:#f3ede0;}
+  .sr-badge-head{font-size:10.5px;font-weight:700;color:var(--saffron-deep);background:#FCE7D9;padding:2px 8px;border-radius:20px;margin-left:6px;vertical-align:middle;}
+  .sr-empty{text-align:center;padding:32px 12px;color:var(--indigo-soft);font-size:14px;line-height:1.6;}
+  .sr-empty-glyph{font-size:30px;margin-bottom:8px;opacity:0.6;}
+  .sr-att-top{display:flex;align-items:center;gap:16px;flex-wrap:wrap;justify-content:space-between;}
+  .sr-date-input{padding:9px 12px;border:1px solid var(--line);border-radius:9px;font-size:14px;font-family:'Inter',sans-serif;background:#fff;color:var(--indigo);}
+  .sr-ring-wrap{display:flex;align-items:center;gap:10px;}
+  .sr-ring-label{font-size:12px;color:var(--indigo-soft);line-height:1.3;}
+  .sr-ring-label b{color:var(--indigo);font-size:15px;display:block;}
+  .sr-att-row{display:flex;align-items:center;gap:12px;padding:11px 4px;border-bottom:1px solid var(--line);}
+  .sr-att-row:last-child{border-bottom:none;}
+  .sr-toggle{display:flex;flex-wrap:wrap;border:1px solid var(--line);border-radius:8px;overflow:hidden;flex-shrink:0;}
+  .sr-toggle button{border:none;background:#fff;padding:7px 10px;font-size:12.5px;font-weight:600;cursor:pointer;color:var(--indigo-soft);font-family:'Inter',sans-serif;}
+  .sr-toggle button.present.on{background:var(--sage);color:#fff;}
+  .sr-toggle button.absent.on{background:var(--rose);color:#fff;}
+  .sr-toggle button.pravas.on{background:var(--gold);color:#fff;}
+  .sr-toggle button.anya.on{background:var(--indigo-soft);color:#fff;}
+  .sr-toggle button:focus-visible{outline:2px solid var(--gold);outline-offset:-2px;}
+  .sr-history-item{display:flex;justify-content:space-between;align-items:center;padding:10px 4px;border-bottom:1px solid var(--line);font-size:13.5px;cursor:pointer;background:none;border-left:none;border-right:none;border-top:none;width:100%;text-align:left;color:var(--indigo);font-family:'Inter',sans-serif;}
+  .sr-history-item:last-child{border-bottom:none;}
+  .sr-history-item:hover{background:#f8f2e4;}
+  .sr-history-badge{font-size:11.5px;font-weight:700;padding:3px 9px;border-radius:20px;background:var(--sage-bg);color:var(--sage);white-space:nowrap;}
+  .sr-note{font-size:12px;color:var(--indigo-soft);margin:6px 4px 0;line-height:1.6;}
+  .sr-type-tag{font-size:11px;font-weight:600;padding:2px 9px;border-radius:20px;background:var(--sage-bg);color:var(--sage);display:inline-block;margin-top:3px;}
+  .sr-subh-card{padding:14px 4px;border-bottom:1px solid var(--line);}
+  .sr-subh-card:last-child{border-bottom:none;}
+  .sr-subh-sanskrit{font-family:'Tiro Devanagari Hindi',serif;font-size:16px;color:var(--indigo);line-height:1.65;margin-bottom:6px;white-space:pre-line;}
+  .sr-subh-meaning{font-size:13.5px;color:var(--indigo-soft);line-height:1.55;white-space:pre-line;}
+  .sr-subh-source{font-size:11.5px;color:var(--gold);margin-top:6px;font-weight:600;}
+  .sr-subh-actions{display:flex;gap:6px;margin-top:9px;}
+  .sr-amrit-card{padding:14px 4px;border-bottom:1px solid var(--line);}
+  .sr-amrit-card:last-child{border-bottom:none;}
+  .sr-amrit-text{font-size:14.5px;color:var(--indigo);line-height:1.6;white-space:pre-line;font-weight:500;}
+  .sr-amrit-author{font-size:12px;color:var(--saffron-deep);margin-top:7px;font-weight:700;}
+  .sr-amrit-context{font-size:12px;color:var(--indigo-soft);margin-top:3px;line-height:1.5;}
+  .sr-amrit-actions{display:flex;gap:6px;margin-top:9px;}
+  .sr-amrit-spot{background:linear-gradient(135deg,#F7E7E9 0%,#F2D6DA 100%);border:1px solid var(--rose);border-radius:14px;padding:16px;}
+  .sr-dash-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;}
+  @media (max-width:520px){.sr-dash-grid{grid-template-columns:1fr;}}
+  .sr-nav-card{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:16px;cursor:pointer;text-align:left;width:100%;font-family:'Inter',sans-serif;display:flex;align-items:center;gap:12px;}
+  .sr-nav-card:hover{border-color:var(--gold);}
+  .sr-nav-card:focus-visible{outline:2px solid var(--gold);outline-offset:2px;}
+  .sr-nav-card-icon{font-size:22px;flex-shrink:0;}
+  .sr-nav-card-title{font-weight:700;font-size:14.5px;color:var(--indigo);font-family:'Baloo 2',sans-serif;}
+  .sr-nav-card-sub{font-size:12px;color:var(--indigo-soft);margin-top:1px;}
+  .sr-spotlight{background:linear-gradient(135deg,#FFF8EA 0%,#FBF0D9 100%);border:1px solid var(--gold);border-radius:14px;padding:18px;}
+  .sr-spotlight-label{font-size:11px;text-transform:uppercase;letter-spacing:0.5px;color:var(--saffron-deep);font-weight:700;margin-bottom:9px;}
+  .sr-ganvesh-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+  @media (max-width:560px){.sr-ganvesh-grid{grid-template-columns:1fr;}}
+  .sr-ganvesh-item{border:1px solid var(--line);border-radius:12px;padding:14px;background:#fff;}
+  .sr-ganvesh-item h3{margin:0 0 8px;font-size:14.5px;color:var(--saffron-deep);}
+  .sr-ganvesh-item ul{margin:0;padding-left:18px;font-size:13.5px;color:var(--indigo-soft);line-height:1.7;}
+  .sr-founder-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+  @media (max-width:560px){.sr-founder-grid{grid-template-columns:1fr;}}
+  .sr-founder-card{text-align:center;border:1px solid var(--line);border-radius:14px;padding:16px 12px;background:#fff;}
+  .sr-founder-photo{width:120px;height:150px;object-fit:cover;border-radius:10px;border:2px solid var(--gold);margin-bottom:10px;background:#f3ede0;}
+  .sr-founder-name{font-weight:700;font-size:14.5px;color:var(--indigo);font-family:'Baloo 2',sans-serif;}
+  .sr-founder-role{font-size:12px;color:var(--saffron-deep);font-weight:600;margin:3px 0 6px;}
+  .sr-founder-desc{font-size:12.5px;color:var(--indigo-soft);line-height:1.6;}
+  .sr-toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:var(--indigo);color:#fff;padding:10px 20px;border-radius:20px;font-size:13.5px;font-weight:500;box-shadow:0 4px 14px rgba(0,0,0,0.2);z-index:50;opacity:0;pointer-events:none;transition:opacity .2s ease,transform .2s ease;}
+  .sr-toast.show{opacity:1;transform:translateX(-50%) translateY(-4px);}
+  .sr-loading{text-align:center;padding:40px;color:var(--indigo-soft);}
+
+  /* ---------- Login gate ---------- */
+  #srLoginGate{ font-family:'Inter',sans-serif; background:var(--cream); color:var(--indigo); min-height:100vh; display:flex; align-items:center; justify-content:center; padding:24px; -webkit-font-smoothing:antialiased; }
+  #srLoginGate h1,#srLoginGate .ln-devnag{font-family:'Tiro Devanagari Hindi','Baloo 2',serif;}
+  .ln-card{ background:var(--paper); border:1px solid var(--line); border-radius:16px; box-shadow:0 4px 18px rgba(32,40,63,0.08); padding:32px 28px; width:100%; max-width:380px; }
+  .ln-brand{display:flex;align-items:center;gap:10px;margin-bottom:22px;}
+  .ln-brand-mark{width:44px;height:44px;border-radius:12px;background:var(--saffron);color:#fff;display:flex;align-items:center;justify-content:center;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:20px;flex-shrink:0;}
+  .ln-brand-title{font-size:18px;line-height:1.25;color:var(--indigo);}
+  .ln-brand-sub{font-size:11px;color:var(--indigo-soft);letter-spacing:0.3px;margin-top:1px;}
+  .ln-lang-toggle{display:flex;background:#f3ede0;border-radius:20px;padding:3px;margin-bottom:22px;}
+  .ln-lang-toggle button{flex:1;border:none;background:transparent;padding:6px 10px;border-radius:18px;cursor:pointer;font-size:12.5px;font-weight:600;color:var(--indigo-soft);font-family:'Inter',sans-serif;transition:all .2s;}
+  .ln-lang-toggle button.active{background:var(--saffron);color:#fff;}
+  .ln-title{font-size:21px;margin:0 0 4px;color:var(--indigo);}
+  .ln-subtitle{font-size:13px;color:var(--indigo-soft);margin:0 0 22px;}
+  .ln-field{margin-bottom:14px;}
+  .ln-field label{display:block;font-size:12px;font-weight:600;color:var(--indigo-soft);margin-bottom:5px;text-transform:uppercase;letter-spacing:0.4px;}
+  .ln-field input{width:100%;padding:11px 12px;border:1px solid var(--line);border-radius:9px;font-size:14.5px;font-family:'Inter',sans-serif;background:#fff;color:var(--indigo);}
+  .ln-field input:focus-visible{outline:2px solid var(--gold);outline-offset:1px;border-color:var(--gold);}
+  .ln-pass-wrap{position:relative;}
+  .ln-pass-wrap input{padding-right:44px;}
+  .ln-pass-toggle{position:absolute;right:4px;top:4px;bottom:4px;width:36px;background:none;border:none;cursor:pointer;color:var(--indigo-soft);font-size:13px;}
+  .ln-row-between{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;font-size:12.5px;}
+  .ln-remember{display:flex;align-items:center;gap:6px;color:var(--indigo-soft);}
+  .ln-remember input{width:14px;height:14px;}
+  .ln-link{color:var(--saffron);text-decoration:none;font-weight:600;cursor:pointer;background:none;border:none;font-size:12.5px;font-family:'Inter',sans-serif;padding:0;}
+  .ln-link:hover{text-decoration:underline;}
+  .ln-btn{width:100%;display:flex;align-items:center;justify-content:center;gap:6px;background:var(--saffron);color:#fff;border:none;padding:12px 18px;border-radius:9px;font-weight:600;font-size:14.5px;cursor:pointer;font-family:'Inter',sans-serif;}
+  .ln-btn:hover{background:var(--saffron-deep);}
+  .ln-btn:disabled{opacity:0.6;cursor:not-allowed;}
+  .ln-error{background:var(--rose-bg);color:var(--rose);border:1px solid #eeccd2;border-radius:9px;padding:9px 12px;font-size:12.5px;margin-bottom:14px;display:none;}
+  .ln-error.show{display:block;}
+  .ln-divider{display:flex;align-items:center;gap:10px;margin:18px 0;color:var(--indigo-soft);font-size:12px;}
+  .ln-divider::before,.ln-divider::after{content:"";flex:1;height:1px;background:var(--line);}
+  .ln-google-btn{width:100%;display:flex;align-items:center;justify-content:center;gap:10px;background:#fff;color:var(--indigo);border:1px solid var(--line);padding:11px 18px;border-radius:9px;font-weight:600;font-size:14.5px;cursor:pointer;font-family:'Inter',sans-serif;margin-bottom:6px;}
+  .ln-google-btn:hover{background:#f7f3e9;}
+  .ln-google-btn svg{width:18px;height:18px;flex-shrink:0;}
+  #lnGoogleReal{display:flex;justify-content:center;margin-bottom:6px;}
+  .ln-footer{text-align:center;margin-top:18px;font-size:12.5px;color:var(--indigo-soft);}
+  .sr-logout-btn{background:none;border:1px solid rgba(255,255,255,0.15);color:var(--sidebar-text);border-radius:8px;padding:6px 10px;font-size:11.5px;cursor:pointer;font-family:'Inter',sans-serif;}
+  .sr-logout-btn:hover{background:rgba(255,255,255,0.08);}
+</style>
+</head>
+<body>
+<div id="srLoginGate">
+  <div class="ln-card">
+    <div class="ln-brand">
+      <div class="ln-brand-mark">श</div>
+      <div>
+        <div class="ln-brand-title ln-devnag" id="lnBrandTitle">शाखा पुस्तिका</div>
+        <div class="ln-brand-sub" id="lnBrandSub">Shakha Pustika</div>
+      </div>
+    </div>
+
+    <div class="ln-lang-toggle">
+      <button id="lnLangHi" class="active" onclick="srLoginSetLang('hi')">हिंदी</button>
+      <button id="lnLangEn" onclick="srLoginSetLang('en')">English</button>
+    </div>
+
+    <h1 class="ln-title" id="lnTitle">प्रवेश करें</h1>
+    <p class="ln-subtitle" id="lnSubtitle">अपनी शाखा में लॉगिन करें</p>
+
+    <div class="ln-error" id="lnError"></div>
+
+    <form id="lnForm">
+      <div class="ln-field">
+        <label id="lnLabelUser">स्वयंसेवक का नाम / फोन नंबर</label>
+        <input type="text" id="lnUser" autocomplete="username" required>
+      </div>
+      <div class="ln-field">
+        <label id="lnLabelPass">पासकोड</label>
+        <div class="ln-pass-wrap">
+          <input type="password" id="lnPass" autocomplete="current-password" required>
+          <button type="button" class="ln-pass-toggle" id="lnPassToggle" onclick="srLoginTogglePass()">देखें</button>
+        </div>
+      </div>
+      <div class="ln-row-between">
+        <label class="ln-remember">
+          <input type="checkbox" id="lnRemember"> <span id="lnRememberText">मुझे याद रखें</span>
+        </label>
+        <button type="button" class="ln-link" id="lnForgot" onclick="srLoginForgot()">पासकोड भूल गए?</button>
+      </div>
+      <button type="submit" class="ln-btn" id="lnSubmit">प्रवेश करें</button>
+    </form>
+
+    <div class="ln-divider" id="lnDivider">या</div>
+    <div id="lnGoogleReal"></div>
+    <button type="button" class="ln-google-btn" id="lnGoogleFallback" onclick="srLoginGoogleFallback()">
+      <svg viewBox="0 0 48 48"><path fill="#FFC107" d="M43.6 20.5H42V20H24v8h11.3c-1.6 4.6-6 8-11.3 8-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.8 1.1 8 3l6-6C34.9 5.1 29.7 3 24 3 12.4 3 3 12.4 3 24s9.4 21 21 21 21-9.4 21-21c0-1.2-.1-2.4-.4-3.5z"/><path fill="#FF3D00" d="M6.3 14.7l6.6 4.8C14.6 15.3 18.9 12 24 12c3.1 0 5.8 1.1 8 3l6-6C34.9 5.1 29.7 3 24 3c-7.7 0-14.4 4.3-17.7 10.7z"/><path fill="#4CAF50" d="M24 45c5.6 0 10.7-2.1 14.5-5.6l-6.7-5.5C29.7 35.9 27 37 24 37c-5.3 0-9.7-3.4-11.3-8.1l-6.6 5.1C9.5 40.6 16.2 45 24 45z"/><path fill="#1976D2" d="M43.6 20.5H42V20H24v8h11.3c-.8 2.3-2.2 4.2-4.1 5.6l6.7 5.5C41.7 36 45 30.5 45 24c0-1.2-.1-2.4-.4-3.5z"/></svg>
+      <span id="lnGoogleText">Google से जारी रखें</span>
+    </button>
+
+    <div class="ln-footer" id="lnFooter">
+      पहली बार यहाँ? <button class="ln-link" onclick="srLoginRegister()" id="lnRegisterLink">खाता बनाएं</button>
+    </div>
+  </div>
+</div>
+<div class="ln-toast" id="lnToast" style="position:fixed;bottom:20px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--indigo);color:#fff;padding:10px 18px;border-radius:9px;font-size:13px;opacity:0;transition:all .25s;pointer-events:none;z-index:60;"></div>
+
+<div id="srApp" style="display:none;">
+  <div class="sr-shell">
+    <aside class="sr-sidebar" id="srSidebar">
+      <button class="sr-sidebar-close" id="srSidebarClose" aria-label="Close menu">✕</button>
+      <div class="sr-brand">
+        <div class="sr-brand-mark">श</div>
+        <div>
+          <div class="sr-brand-title" id="srBrandTitle">शाखा पुस्तिका</div>
+          <div class="sr-brand-sub" id="srBrandSub">Shakha Pustika</div>
+        </div>
+        <button class="sr-logout-btn" id="srLogoutBtn" onclick="srDoLogout()" style="margin-left:auto;">लॉग आउट</button>
+      </div>
+      <div class="sr-org-box" id="srOrgBox"></div>
+      <div class="sr-lang-toggle">
+        <button id="srLangHi" class="active" data-lang="hi">हिंदी</button>
+        <button id="srLangEn" data-lang="en">English</button>
+      </div>
+      <nav class="sr-nav" id="srNav"></nav>
+      <div class="sr-sidebar-bottom" id="srHeadBox"></div>
+    </aside>
+
+    <div class="sr-overlay" id="srOverlay"></div>
+
+    <main class="sr-main">
+      <div class="sr-topbar">
+        <button class="sr-hamburger" id="srHamburger" aria-label="Open menu">☰</button>
+        <div class="sr-topbar-title" id="srPageTitle"></div>
+      </div>
+      <div class="sr-content" id="srContent">
+        <div class="sr-loading">Loading… / लोड हो रहा है…</div>
+      </div>
+    </main>
+  </div>
+
+  <div class="sr-toast" id="srToast"></div>
+</div>
+
+<script>
+(function(){
+  // ==================== LOGIN GATE ====================
+  const LT = {
+    hi:{
+      title:'प्रवेश करें', subtitle:'अपनी शाखा में लॉगिन करें',
+      labelUser:'स्वयंसेवक का नाम / फोन नंबर', labelPass:'पासकोड',
+      remember:'मुझे याद रखें', forgot:'पासकोड भूल गए?', submit:'प्रवेश करें',
+      submitting:'प्रवेश हो रहा है…', registerPrompt:'पहली बार यहाँ?', registerLink:'खाता बनाएं',
+      show:'देखें', hide:'छिपाएं',
+      errRequired:'कृपया नाम और पासकोड दोनों भरें।',
+      errInvalid:'नाम या पासकोड गलत है। पुनः प्रयास करें।',
+      welcomeToast:'स्वागत है',
+      forgotToast:'कृपया अपने शाखा प्रमुख से संपर्क करें।',
+      registerToast:'नया खाता बनाने के लिए अपने शाखा प्रमुख से संपर्क करें।',
+      divider:'या', googleBtn:'Google से जारी रखें',
+      googleNotConfigured:'Google लॉगिन अभी सेट नहीं है। साइट व्यवस्थापक को अपना Google Client ID जोड़ने दें।',
+      logout:'लॉग आउट'
+    },
+    en:{
+      title:'Sign in', subtitle:'Log in to your shakha',
+      labelUser:'Volunteer name / phone number', labelPass:'Passcode',
+      remember:'Remember me', forgot:'Forgot passcode?', submit:'Sign in',
+      submitting:'Signing in…', registerPrompt:'First time here?', registerLink:'Create an account',
+      show:'Show', hide:'Hide',
+      errRequired:'Please enter both name and passcode.',
+      errInvalid:'Incorrect name or passcode. Please try again.',
+      welcomeToast:'Welcome',
+      forgotToast:'Please contact your shakha head to reset your passcode.',
+      registerToast:'Please contact your shakha head to set up a new account.',
+      divider:'or', googleBtn:'Continue with Google',
+      googleNotConfigured:'Google sign-in isn\'t configured yet. Ask the site admin to add a Google Client ID.',
+      logout:'Log out'
+    }
+  };
+  let lnLang = 'hi';
+  function ltr(){ return LT[lnLang]; }
+
+  window.srLoginSetLang = function(l){
+    lnLang = l;
+    document.getElementById('lnLangHi').classList.toggle('active', l==='hi');
+    document.getElementById('lnLangEn').classList.toggle('active', l==='en');
+    document.getElementById('lnTitle').textContent = ltr().title;
+    document.getElementById('lnSubtitle').textContent = ltr().subtitle;
+    document.getElementById('lnLabelUser').textContent = ltr().labelUser;
+    document.getElementById('lnLabelPass').textContent = ltr().labelPass;
+    document.getElementById('lnRememberText').textContent = ltr().remember;
+    document.getElementById('lnForgot').textContent = ltr().forgot;
+    document.getElementById('lnSubmit').textContent = ltr().submit;
+    document.getElementById('lnRegisterLink').textContent = ltr().registerLink;
+    document.getElementById('lnDivider').textContent = ltr().divider;
+    document.getElementById('lnGoogleText').textContent = ltr().googleBtn;
+    document.getElementById('lnPassToggle').textContent =
+      document.getElementById('lnPass').type === 'password' ? ltr().show : ltr().hide;
+    const footer = document.getElementById('lnFooter');
+    footer.childNodes[0].textContent = ltr().registerPrompt + ' ';
+    const logoutBtn = document.getElementById('srLogoutBtn');
+    if(logoutBtn) logoutBtn.textContent = ltr().logout;
+    lnHideError();
+  };
+
+  window.srLoginTogglePass = function(){
+    const input = document.getElementById('lnPass');
+    const btn = document.getElementById('lnPassToggle');
+    if(input.type === 'password'){ input.type = 'text'; btn.textContent = ltr().hide; }
+    else { input.type = 'password'; btn.textContent = ltr().show; }
+  };
+
+  function lnShowError(msg){
+    const el = document.getElementById('lnError');
+    el.textContent = msg;
+    el.classList.add('show');
+  }
+  function lnHideError(){
+    document.getElementById('lnError').classList.remove('show');
+  }
+  function lnToast(msg){
+    const el = document.getElementById('lnToast');
+    el.textContent = msg;
+    el.style.opacity = '1';
+    el.style.transform = 'translateX(-50%) translateY(0)';
+    setTimeout(()=>{ el.style.opacity = '0'; el.style.transform = 'translateX(-50%) translateY(20px)'; }, 2400);
+  }
+
+  const SESSION_KEY = 'shakhaPustika:session';
+
+  function showApp(){
+    document.getElementById('srLoginGate').style.display = 'none';
+    document.getElementById('srApp').style.display = '';
+  }
+  function showGate(){
+    document.getElementById('srApp').style.display = 'none';
+    document.getElementById('srLoginGate').style.display = 'flex';
+  }
+
+  window.srDoLogout = function(){
+    try{ localStorage.removeItem(SESSION_KEY); sessionStorage.removeItem(SESSION_KEY); }catch(e){}
+    showGate();
+  };
+
+  // If a session already exists, skip straight to the app.
+  (function checkExistingSession(){
+    try{
+      const raw = localStorage.getItem(SESSION_KEY) || sessionStorage.getItem(SESSION_KEY);
+      if(raw){ showApp(); }
+    }catch(e){ /* ignore */ }
+  })();
+
+  // ---------- Storage-backed demo auth ----------
+  // NOTE: plain-text passcodes are fine for this demo/login-UI, but in a real
+  // deployment credentials must be verified against a proper backend, never
+  // checked client-side like this.
+  const hasCloudStorage = (typeof window !== 'undefined' && window.storage && typeof window.storage.get === 'function');
+  async function lnGetUsers(){
+    try{
+      if(hasCloudStorage){
+        const r = await window.storage.get('authUsers', true);
+        return r ? JSON.parse(r.value) : [];
+      }
+      const raw = localStorage.getItem('shakhaPustika:authUsers');
+      return raw ? JSON.parse(raw) : [];
+    }catch(e){ return []; }
+  }
+  async function lnSaveUsers(users){
+    try{
+      if(hasCloudStorage){ await window.storage.set('authUsers', JSON.stringify(users), true); return; }
+      localStorage.setItem('shakhaPustika:authUsers', JSON.stringify(users));
+    }catch(e){ /* ignore */ }
+  }
+  async function lnSeedDemoUserIfEmpty(){
+    const users = await lnGetUsers();
+    if(users.length === 0){ await lnSaveUsers([{ name:'demo', pass:'demo123' }]); }
+  }
+  lnSeedDemoUserIfEmpty();
+
+  document.getElementById('lnForm').addEventListener('submit', async function(e){
+    e.preventDefault();
+    lnHideError();
+    const nameInput = document.getElementById('lnUser').value.trim();
+    const passInput = document.getElementById('lnPass').value;
+    if(!nameInput || !passInput){ lnShowError(ltr().errRequired); return; }
+
+    const btn = document.getElementById('lnSubmit');
+    btn.disabled = true;
+    btn.textContent = ltr().submitting;
+
+    const users = await lnGetUsers();
+    const match = users.find(u => u.name.toLowerCase() === nameInput.toLowerCase() && u.pass === passInput);
+
+    btn.disabled = false;
+    btn.textContent = ltr().submit;
+
+    if(match){
+      const remember = document.getElementById('lnRemember').checked;
+      try{
+        const storageArea = remember ? localStorage : sessionStorage;
+        storageArea.setItem(SESSION_KEY, JSON.stringify({ name: match.name, at: Date.now() }));
+      }catch(e){ /* ignore */ }
+      lnToast(ltr().welcomeToast + ', ' + match.name);
+      showApp();
+    } else {
+      lnShowError(ltr().errInvalid);
+    }
+  });
+
+  window.srLoginForgot = function(){ lnToast(ltr().forgotToast); };
+  window.srLoginRegister = function(){ lnToast(ltr().registerToast); };
+
+  // ---------- Google Sign-In ----------
+  // 1. Go to https://console.cloud.google.com/apis/credentials
+  // 2. Create an "OAuth client ID" of type "Web application"
+  // 3. Add this page's exact hosted URL under "Authorized JavaScript origins"
+  // 4. Paste the client ID below (looks like xxxx.apps.googleusercontent.com)
+  const GOOGLE_CLIENT_ID = 'YOUR_GOOGLE_CLIENT_ID.apps.googleusercontent.com';
+  const googleConfigured = GOOGLE_CLIENT_ID && GOOGLE_CLIENT_ID.indexOf('YOUR_GOOGLE_CLIENT_ID') === -1;
+
+  function lnDecodeJwt(token){
+    try{
+      const base64 = token.split('.')[1].replace(/-/g,'+').replace(/_/g,'/');
+      const json = decodeURIComponent(atob(base64).split('').map(c =>
+        '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2)).join(''));
+      return JSON.parse(json);
+    }catch(e){ return null; }
+  }
+
+  async function lnHandleGoogleCredential(response){
+    const payload = lnDecodeJwt(response.credential);
+    if(!payload) return;
+    const remember = document.getElementById('lnRemember').checked;
+    try{
+      const storageArea = remember ? localStorage : sessionStorage;
+      storageArea.setItem(SESSION_KEY, JSON.stringify({
+        name: payload.name, email: payload.email, picture: payload.picture,
+        provider: 'google', at: Date.now()
+      }));
+    }catch(e){ /* ignore */ }
+    lnToast(ltr().welcomeToast + ', ' + payload.name);
+    showApp();
+  }
+
+  window.srLoginGoogleFallback = function(){ lnToast(ltr().googleNotConfigured); };
+
+  function lnInitGoogle(){
+    if(!googleConfigured || typeof google === 'undefined' || !google.accounts) return;
+    document.getElementById('lnGoogleFallback').style.display = 'none';
+    google.accounts.id.initialize({ client_id: GOOGLE_CLIENT_ID, callback: lnHandleGoogleCredential });
+    google.accounts.id.renderButton(document.getElementById('lnGoogleReal'), {
+      theme: 'outline', size: 'large', width: 328, shape: 'rectangular'
+    });
+  }
+  let lnGoogleCheckAttempts = 0;
+  const lnGoogleCheckInterval = setInterval(function(){
+    lnGoogleCheckAttempts++;
+    if(typeof google !== 'undefined' && google.accounts){
+      clearInterval(lnGoogleCheckInterval);
+      lnInitGoogle();
+    } else if(lnGoogleCheckAttempts > 20){
+      clearInterval(lnGoogleCheckInterval);
+    }
+  }, 250);
+  // ==================== END LOGIN GATE ====================
+})();
+</script>
+
+<script>
+(function(){
+  // ---------------- i18n ----------------
+  const T = {
+    hi: {
+      brandTitle:'शाखा पुस्तिका', brandSub:'Shakha Pustika',
+      closeMenu:'मेन्यू बंद करें', openMenu:'मेन्यू खोलें', loading:'लोड हो रहा है…',
+      nav:{ dashboard:'डैशबोर्ड', members:'सदस्य सूची', attendance:'दैनिक उपस्थिति', games:'खेल संग्रह', subhashitam:'सुभाषितम् संग्रह', amritvachan:'अमृत वचन', ganvesh:'गणवेश', pravas:'प्रवास' },
+      navIcons:{ dashboard:'🏠', members:'🧑‍🤝‍🧑', attendance:'✅', games:'🤾', subhashitam:'📜', amritvachan:'🪔', ganvesh:'🧥', pravas:'🧳' },
+      head:{ label:'शाखा प्रमुख', notSet:'प्रमुख अभी तय नहीं है।', chooseLink:'सदस्य सूची से चुनें' },
+      org:{ prant:'प्रांत', mahanagar:'महानगर', nagar:'नगर', gatKramank:'गट क्रमांक', mandal:'मंडल', shakha:'शाखा', prantPh:'प्रांत का नाम', mahanagarPh:'महानगर का नाम', nagarPh:'नगर का नाम', gatKramankPh:'गट क्रमांक लिखें', mandalPh:'मंडल का नाम', shakhaPh:'शाखा का नाम', notSet:'शाखा विवरण अभी भरा नहीं गया है।', editLink:'विवरण भरें/संपादित करें', save:'सहेजें', cancel:'रद्द करें', saved:'शाखा विवरण सहेजा गया' },
+      toast:{ saveErr:'सहेजने में समस्या हुई', memberUpdated:'सदस्य अपडेट किया गया', memberAdded:'सदस्य जोड़ा गया', memberDeleted:'सदस्य हटाया गया', headSet:'शाखा प्रमुख निर्धारित किया गया', headRemoved:'प्रमुख हटाया गया', gameUpdated:'खेल अपडेट किया गया', gameAdded:'खेल जोड़ा गया', gameDeleted:'खेल हटाया गया', subhUpdated:'सुभाषितम् अपडेट किया गया', subhAdded:'सुभाषितम् जोड़ा गया', subhDeleted:'हटाया गया', amritUpdated:'अमृत वचन अपडेट किया गया', amritAdded:'अमृत वचन जोड़ा गया', amritDeleted:'हटाया गया', attSaved:'उपस्थिति सहेजी गई', pravasUpdated:'प्रवास अपडेट किया गया', pravasAdded:'प्रवास जोड़ा गया', pravasDeleted:'प्रवास हटाया गया' },
+      confirm:{ delMember:(n)=>`क्या आप वाकई "${n}" को हटाना चाहते हैं?`, delGame:(n)=>`क्या आप "${n}" को हटाना चाहते हैं?`, delSubh:'क्या आप इस सुभाषितम् को हटाना चाहते हैं?', delAmrit:'क्या आप इस अमृत वचन को हटाना चाहते हैं?', delPravas:(n)=>`क्या आप "${n}" का प्रवास विवरण हटाना चाहते हैं?` },
+      dash:{ today:(d)=>`आज, ${d}`, headPrefix:'शाखा प्रमुख: ', chooseHead:'सदस्य सूची से शाखा प्रमुख चुनें →', members:(n)=>`${n} सदस्य`, viewMembers:'सदस्य सूची देखें', present:(p,t)=>`${p}/${t} उपस्थित`, fillAtt:'आज की उपस्थिति भरें', games:(n)=>`${n} खेल`, viewGames:'खेल संग्रह देखें', subh:(n)=>`${n} सुभाषितम्`, viewSubh:'संग्रह देखें', amrit:(n)=>`${n} अमृत वचन`, viewAmrit:'संग्रह देखें', todaySubh:'आज का सुभाषितम्', suggestedSubh:'सुझाया गया सुभाषितम्', subhTitle:'सुभाषितम्', emptySubh:'अभी संग्रह खाली है। ', addSubhLink:'सुभाषितम् जोड़ें →' },
+      members:{ editTitle:'सदस्य संपादित करें', addTitle:'नया सदस्य जोड़ें', name:'नाम (Name)', namePh:'जैसे: रमेश शर्मा', role:'दायित्व (Role)', rolePh:'जैसे: मुख्य शिक्षक', mobile:'मोबाइल नंबर', mobilePh:'10 अंकों का नंबर', address:'पता (Address)', addressPh:'पूरा पता लिखें', shikshan:'शिक्षण (पूर्ण किए गए शिक्षा वर्ग)', shikshanTypes:['प्रारंभिक शिक्षा वर्ग','प्राथमिक शिक्षा वर्ग','कार्यकर्ता विकास वर्ग प्रथम','कार्यकर्ता विकास वर्ग द्वितीय','कार्यकर्ता विकास वर्ग तृतीय'], save:'बदलाव सहेजें', add:'सदस्य जोड़ें', cancel:'रद्द करें', allMembers:(n)=>`सभी सदस्य (${n})`, starNote:'⭐ पर क्लिक कर किसी एक सदस्य को "शाखा प्रमुख" बनाएं।', empty:'अभी कोई सदस्य नहीं जोड़ा गया।<br>ऊपर फ़ॉर्म से पहला सदस्य जोड़ें।', headBadge:'प्रमुख', edit:'संपादित करें', del:'हटाएं', makeHead:(n)=>`${n} को शाखा प्रमुख बनाएं` },
+      games:{ editTitle:'खेल संपादित करें', addTitle:'नया खेल जोड़ें', name:'खेल का नाम', namePh:'जैसे: कबड्डी', type:'प्रकार', typeSelect:'— चुनें —', types:['शारीरिक','बौद्धिक','सामूहिक','अन्य'], desc:'विवरण / नियम', descPh:'खेल के नियम या खेलने का तरीका लिखें', save:'बदलाव सहेजें', add:'खेल जोड़ें', cancel:'रद्द करें', all:(n)=>`सभी खेल (${n})`, empty:'अभी कोई खेल नहीं जोड़ा गया।', edit:'संपादित करें', del:'हटाएं' },
+      subh:{ editTitle:'सुभाषितम् संपादित करें', addTitle:'नया सुभाषितम् जोड़ें', sanskrit:'संस्कृत श्लोक', sanskritPh:'संस्कृत श्लोक लिखें', meaning:'हिंदी अर्थ', meaningPh:'अर्थ / भावार्थ लिखें', source:'स्रोत (वैकल्पिक)', sourcePh:'जैसे: चाणक्य नीति', save:'बदलाव सहेजें', add:'सुभाषितम् जोड़ें', cancel:'रद्द करें', collection:(n)=>`संग्रह (${n})`, empty:'अभी संग्रह खाली है।', edit:'संपादित करें', del:'हटाएं' },
+      amrit:{ editTitle:'अमृत वचन संपादित करें', addTitle:'नया अमृत वचन जोड़ें', text:'अमृत वचन', textPh:'प्रेरक वाक्य / अमृत वचन लिखें', author:'वक्ता / महापुरुष', authorPh:'जैसे: डॉ. केशव बलिराम हेडगेवार', context:'संदर्भ (वैकल्पिक)', contextPh:'जैसे: अवसर या पृष्ठभूमि', save:'बदलाव सहेजें', add:'अमृत वचन जोड़ें', cancel:'रद्द करें', collection:(n)=>`संग्रह (${n})`, empty:'अभी संग्रह खाली है।', edit:'संपादित करें', del:'हटाएं' },
+      ganvesh:{ title:'गणवेश (Uniform)', intro:'शाखा में स्वयंसेवकों की एकरूपता, अनुशासन व समता का प्रतीक — समय के साथ गणवेश में हुए परिवर्तन नीचे दिए गए हैं।', full:'🟤 पूर्ण गणवेश (2024 से)', fullItems:['भूरे रंग की फुल पैंट','श्वेत आधी बाजू का शर्ट','काली टोपी (कैप)','काला बेल्ट व भूरे रंग के जूते-मोज़े','कंधे पर डोरी/अंगवस्त्र (यथावसर)'], trad:'🟫 पारंपरिक गणवेश (1925–2023)', tradItems:['ख़ाकी रंग की हाफ़ पैंट','श्वेत शर्ट','काली टोपी (कैप)','काला बेल्ट व काले जूते'], toolsNote:'आवश्यक साधन: दंड (बांस की छड़ी), ध्वज (भगवा ध्वज) — दैनिक शाखा में प्रयुक्त होते हैं।', sourceHeading:'प्रेरणा स्रोत', founder1Name:'डॉ. केशव बळीराम हेडगेवार', founder1Role:'संस्थापक व प्रथम सरसंघचालक', founder1Desc:'1925 में नागपुर में राष्ट्रीय स्वयंसेवक संघ की स्थापना की। उन्हें आदर से "डॉक्टरजी" कहा जाता है।', founder2Name:'माधव सदाशिव गोळवलकर', founder2Role:'द्वितीय सरसंघचालक', founder2Desc:'1940 से 1973 तक संघ के द्वितीय सरसंघचालक रहे। स्वयंसेवकों में वे आदर से "श्री गुरुजी" कहलाते हैं।', imgSource:'चित्र स्रोत: विकिमीडिया कॉमन्स (सार्वजनिक/CC BY-SA)' },
+      att:{ pickDate:'तारीख़ चुनें', presentMembers:'उपस्थित सदस्य', activity:'आज की गतिविधि', game:'खेल', none:'— कोई नहीं —', subhashitam:'सुभाषितम्', emptyNote1:'अभी खेल व सुभाषितम् संग्रह खाली है। ', addGameLink:'खेल जोड़ें', addSubhLink:'सुभाषितम् जोड़ें', markAtt:'उपस्थिति दर्ज करें', emptyMembers:'पहले "सदस्य सूची" पेज में सदस्य जोड़ें।', present:'उपस्थित', absent:'अनुपस्थित', pravas:'प्रवास', anya:'अन्य', save:'उपस्थिति सहेजें', saving:'सहेजा जा रहा है…', sharedNote:'यह डेटा सभी उपयोगकर्ताओं के बीच साझा (shared) है।', history:'पिछली उपस्थिति (History)', emptyHistory:'अभी कोई रिकॉर्ड नहीं है।', badgePresent:(n)=>`${n} उपस्थित` },
+      pravasPage:{ editTitle:'प्रवास विवरण संपादित करें', addTitle:'नया प्रवास जोड़ें', name:'नाम (Name)', namePh:'जैसे: रमेश शर्मा', dayitva:'दायित्व', dayitvaPh:'जैसे: जिला प्रचारक', sanghAge:'संघ आयु', sanghAgePh:'जैसे: 12 वर्ष', place:'प्रवास स्थान (वैकल्पिक)', placePh:'जैसे: नागपुर', date:'दिनांक (वैकल्पिक)', purpose:'प्रयोजन / विवरण (वैकल्पिक)', purposePh:'प्रवास का उद्देश्य या टिप्पणी लिखें', save:'बदलाव सहेजें', add:'प्रवास जोड़ें', cancel:'रद्द करें', all:(n)=>`सभी प्रवास (${n})`, empty:'अभी कोई प्रवास विवरण नहीं जोड़ा गया।<br>ऊपर फ़ॉर्म से पहला प्रवास जोड़ें।', edit:'संपादित करें', del:'हटाएं' },
+      months:['जन','फ़र','मार्च','अप्रैल','मई','जून','जुलाई','अग','सित','अक्टू','नव','दिस']
+    },
+    en: {
+      brandTitle:'Shakha Pustika', brandSub:'शाखा पुस्तिका',
+      closeMenu:'Close menu', openMenu:'Open menu', loading:'Loading…',
+      nav:{ dashboard:'Dashboard', members:'Members', attendance:'Daily Attendance', games:'Games', subhashitam:'Subhashitam', amritvachan:'Amrit Vachan', ganvesh:'Uniform', pravas:'Pravas (Tour)' },
+      navIcons:{ dashboard:'🏠', members:'🧑‍🤝‍🧑', attendance:'✅', games:'🤾', subhashitam:'📜', amritvachan:'🪔', ganvesh:'🧥', pravas:'🧳' },
+      head:{ label:'Shakha Head', notSet:'No head selected yet.', chooseLink:'Choose from Members' },
+      org:{ prant:'Prant', mahanagar:'Mahanagar', nagar:'Nagar', gatKramank:'Gat Number', mandal:'Mandal', shakha:'Shakha', prantPh:'Prant name', mahanagarPh:'Mahanagar name', nagarPh:'Nagar name', gatKramankPh:'Enter gat number', mandalPh:'Mandal name', shakhaPh:'Shakha name', notSet:'Shakha details not filled in yet.', editLink:'Fill in / Edit details', save:'Save', cancel:'Cancel', saved:'Shakha details saved' },
+      toast:{ saveErr:'Problem saving data', memberUpdated:'Member updated', memberAdded:'Member added', memberDeleted:'Member deleted', headSet:'Shakha head set', headRemoved:'Head removed', gameUpdated:'Game updated', gameAdded:'Game added', gameDeleted:'Game deleted', subhUpdated:'Subhashitam updated', subhAdded:'Subhashitam added', subhDeleted:'Deleted', amritUpdated:'Amrit Vachan updated', amritAdded:'Amrit Vachan added', amritDeleted:'Deleted', attSaved:'Attendance saved', pravasUpdated:'Pravas updated', pravasAdded:'Pravas added', pravasDeleted:'Pravas deleted' },
+      confirm:{ delMember:(n)=>`Are you sure you want to delete "${n}"?`, delGame:(n)=>`Delete "${n}"?`, delSubh:'Delete this subhashitam?', delAmrit:'Delete this Amrit Vachan?', delPravas:(n)=>`Delete pravas details for "${n}"?` },
+      dash:{ today:(d)=>`Today, ${d}`, headPrefix:'Shakha Head: ', chooseHead:'Choose shakha head from Members →', members:(n)=>`${n} Members`, viewMembers:'View member list', present:(p,t)=>`${p}/${t} Present`, fillAtt:"Fill today's attendance", games:(n)=>`${n} Games`, viewGames:'View games collection', subh:(n)=>`${n} Subhashitam`, viewSubh:'View collection', amrit:(n)=>`${n} Amrit Vachan`, viewAmrit:'View collection', todaySubh:"Today's Subhashitam", suggestedSubh:'Suggested Subhashitam', subhTitle:'Subhashitam', emptySubh:'Collection is empty. ', addSubhLink:'Add subhashitam →' },
+      members:{ editTitle:'Edit Member', addTitle:'Add New Member', name:'Name', namePh:'e.g. Ramesh Sharma', role:'Role', rolePh:'e.g. Head Teacher', mobile:'Mobile Number', mobilePh:'10 digit number', address:'Address', addressPh:'Enter full address', shikshan:'Training (Shiksha Varg completed)', shikshanTypes:['Prarambhik Shiksha Varg','Prathmik Shiksha Varg','Karyakarta Vikas Varg – Pratham (I)','Karyakarta Vikas Varg – Dwitiya (II)','Karyakarta Vikas Varg – Tritiya (III)'], save:'Save Changes', add:'Add Member', cancel:'Cancel', allMembers:(n)=>`All Members (${n})`, starNote:'Click ⭐ to make a member the "Shakha Head".', empty:'No members added yet.<br>Add the first member using the form above.', headBadge:'Head', edit:'Edit', del:'Delete', makeHead:(n)=>`Make ${n} Shakha Head` },
+      games:{ editTitle:'Edit Game', addTitle:'Add New Game', name:'Game Name', namePh:'e.g. Kabaddi', type:'Type', typeSelect:'— Select —', types:['Physical','Intellectual','Group','Other'], desc:'Description / Rules', descPh:'Write the rules or how to play', save:'Save Changes', add:'Add Game', cancel:'Cancel', all:(n)=>`All Games (${n})`, empty:'No games added yet.', edit:'Edit', del:'Delete' },
+      subh:{ editTitle:'Edit Subhashitam', addTitle:'Add New Subhashitam', sanskrit:'Sanskrit Shloka', sanskritPh:'Write the Sanskrit shloka', meaning:'Meaning', meaningPh:'Write the meaning / translation', source:'Source (optional)', sourcePh:'e.g. Chanakya Niti', save:'Save Changes', add:'Add Subhashitam', cancel:'Cancel', collection:(n)=>`Collection (${n})`, empty:'Collection is empty.', edit:'Edit', del:'Delete' },
+      amrit:{ editTitle:'Edit Amrit Vachan', addTitle:'Add New Amrit Vachan', text:'Amrit Vachan (Golden Words)', textPh:'Write the inspiring saying', author:'Speaker / Great Person', authorPh:'e.g. Dr. Keshav Baliram Hedgewar', context:'Context (optional)', contextPh:'e.g. occasion or background', save:'Save Changes', add:'Add Amrit Vachan', cancel:'Cancel', collection:(n)=>`Collection (${n})`, empty:'Collection is empty.', edit:'Edit', del:'Delete' },
+      ganvesh:{ title:'Uniform (Ganvesh)', intro:'A symbol of uniformity, discipline and equality among swayamsevaks in the shakha — changes to the uniform over time are given below.', full:'🟤 Full Uniform (from 2024)', fullItems:['Brown full pants','White half-sleeve shirt','Black cap','Black belt with brown shoes and socks','Shoulder cord/angavastra (as applicable)'], trad:'🟫 Traditional Uniform (1925–2023)', tradItems:['Khaki half pants','White shirt','Black cap','Black belt with black shoes'], toolsNote:'Required equipment: Dand (bamboo staff), Dhwaj (saffron flag) — used daily in the shakha.', sourceHeading:'Sources of Inspiration', founder1Name:'Dr. Keshav Baliram Hedgewar', founder1Role:'Founder & First Sarsanghchalak', founder1Desc:'Founded the Rashtriya Swayamsevak Sangh in Nagpur in 1925. He is respectfully called "Doctorji".', founder2Name:'Madhav Sadashiv Golwalkar', founder2Role:'Second Sarsanghchalak', founder2Desc:'Served as the second Sarsanghchalak of the Sangh from 1940 to 1973. Swayamsevaks respectfully call him "Shri Guruji".', imgSource:'Image source: Wikimedia Commons (Public/CC BY-SA)' },
+      att:{ pickDate:'Select Date', presentMembers:'Members Present', activity:"Today's Activity", game:'Game', none:'— None —', subhashitam:'Subhashitam', emptyNote1:'Games and subhashitam collections are empty. ', addGameLink:'Add games', addSubhLink:'Add subhashitam', markAtt:'Record Attendance', emptyMembers:'Add members on the "Members" page first.', present:'Present', absent:'Absent', pravas:'Tour', anya:'Other', save:'Save Attendance', saving:'Saving…', sharedNote:'This data is shared among all users.', history:'Attendance History', emptyHistory:'No records yet.', badgePresent:(n)=>`${n} present` },
+      pravasPage:{ editTitle:'Edit Pravas Details', addTitle:'Add New Pravas', name:'Name', namePh:'e.g. Ramesh Sharma', dayitva:'Dayitva (Responsibility)', dayitvaPh:'e.g. District Pracharak', sanghAge:'Sangh Age', sanghAgePh:'e.g. 12 years', place:'Place of Pravas (optional)', placePh:'e.g. Nagpur', date:'Date (optional)', purpose:'Purpose / Notes (optional)', purposePh:'Write the purpose of the tour or a note', save:'Save Changes', add:'Add Pravas', cancel:'Cancel', all:(n)=>`All Pravas (${n})`, empty:'No pravas details added yet.<br>Add the first entry using the form above.', edit:'Edit', del:'Delete' },
+      months:['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']
+    }
+  };
+
+  const state = {
+    lang: 'hi',
+    page: 'dashboard',
+    members: [], games: [], subhashitam: [], amritvachan: [], pravas: [],
+    settings: { headMemberId: null, prant:'', mahanagar:'', nagar:'', gatKramank:'', mandal:'', shakha:'' },
+    orgEditing: false,
+    editingMemberId: null, editingGameId: null, editingSubhId: null, editingAmritId: null, editingPravasId: null,
+    attDate: todayStr(),
+    attRecord: { presence:{}, gameId:null, subhashitamId:null },
+    historyDates: []
+  };
+  function tr(){ return T[state.lang]; }
+
+  const contentEl = document.getElementById('srContent');
+  const toastEl = document.getElementById('srToast');
+  const sidebarEl = document.getElementById('srSidebar');
+  const overlayEl = document.getElementById('srOverlay');
+  const pageTitleEl = document.getElementById('srPageTitle');
+  const navEl = document.getElementById('srNav');
+
+  const pageKeys = ['dashboard','members','attendance','games','subhashitam','amritvachan','ganvesh','pravas'];
+
+  function todayStr(){
+    const d = new Date();
+    const off = d.getTimezoneOffset();
+    const local = new Date(d.getTime() - off*60000);
+    return local.toISOString().slice(0,10);
+  }
+  function esc(s){ return (s||'').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+  function initials(name){ const p = (name||'').trim().split(/\s+/); return ((p[0]||'')[0] + (p[1]?p[1][0]:'')).toUpperCase() || '?'; }
+  function uid(prefix){ return prefix + Date.now() + Math.random().toString(36).slice(2,7); }
+  function truncate(s,n){ s=s||''; return s.length>n ? s.slice(0,n-1)+'…' : s; }
+  function toast(msg){ toastEl.textContent = msg; toastEl.classList.add('show'); setTimeout(()=>toastEl.classList.remove('show'), 2200); }
+  function emptyBlock(glyph, html){ return `<div class="sr-empty"><div class="sr-empty-glyph">${glyph}</div>${html}</div>`; }
+  function formatDate(dstr){
+    const [y,m,d] = dstr.split('-');
+    return `${parseInt(d)} ${tr().months[parseInt(m)-1]} ${y}`;
+  }
+  // maps stored (Hindi) game type value -> localized label
+  const typeMapHiToEn = { 'शारीरिक':'Physical', 'बौद्धिक':'Intellectual', 'सामूहिक':'Group', 'अन्य':'Other' };
+  function typeLabel(hiType){
+    if(!hiType) return '';
+    return state.lang==='en' ? (typeMapHiToEn[hiType]||hiType) : hiType;
+  }
+  // Normalizes an attendance value to one of: 'present' | 'absent' | 'pravas' | 'anya' | null
+  // (also supports legacy boolean values true/false saved before status options were added)
+  function attStatus(v){
+    if(v===true) return 'present';
+    if(v===false) return 'absent';
+    return v || null;
+  }
+  function ringSvg(percent){
+    const r=24, c=2*Math.PI*r, off=c-(percent/100)*c;
+    const color = percent>=70?'var(--sage)':percent>=40?'var(--gold)':'var(--rose)';
+    return `<svg width="60" height="60" viewBox="0 0 60 60">
+      <circle cx="30" cy="30" r="${r}" fill="none" stroke="var(--line)" stroke-width="6"/>
+      <circle cx="30" cy="30" r="${r}" fill="none" stroke="${color}" stroke-width="6" stroke-dasharray="${c}" stroke-dashoffset="${off}" stroke-linecap="round" transform="rotate(-90 30 30)"/>
+      <text x="30" y="34" text-anchor="middle" font-size="13" font-weight="700" fill="var(--indigo)" font-family="Inter,sans-serif">${percent}%</text>
+    </svg>`;
+  }
+
+  // ---------- Storage ----------
+  // Uses window.storage when available (Claude.ai chat/artifact view).
+  // Falls back to the browser's localStorage when this file is opened directly
+  // (e.g. downloaded and double-clicked, or hosted on your own site), so data
+  // is still saved on that device/browser.
+  const LS_PREFIX = 'shakhaPustika:';
+  const hasCloudStorage = (typeof window !== 'undefined' && window.storage && typeof window.storage.get === 'function');
+  const store = {
+    async get(key){
+      if(hasCloudStorage){
+        try{ return await window.storage.get(key, true); }
+        catch(e){ /* fall through to local */ }
+      }
+      try{
+        const raw = localStorage.getItem(LS_PREFIX+key);
+        return raw===null ? null : { key, value: raw, shared:false };
+      }catch(e){ return null; }
+    },
+    async set(key, value){
+      if(hasCloudStorage){
+        try{ const r = await window.storage.set(key, value, true); if(r) return r; }
+        catch(e){ /* fall through to local */ }
+      }
+      try{ localStorage.setItem(LS_PREFIX+key, value); return { key, value, shared:false }; }
+      catch(e){ return null; }
+    },
+    async list(prefix){
+      if(hasCloudStorage){
+        try{ return await window.storage.list(prefix, true); }
+        catch(e){ /* fall through to local */ }
+      }
+      try{
+        const keys = [];
+        for(let i=0;i<localStorage.length;i++){
+          const k = localStorage.key(i);
+          if(k && k.indexOf(LS_PREFIX)===0){
+            const bare = k.slice(LS_PREFIX.length);
+            if(!prefix || bare.indexOf(prefix)===0) keys.push(bare);
+          }
+        }
+        return { keys, prefix, shared:false };
+      }catch(e){ return { keys:[], prefix, shared:false }; }
+    }
+  };
+  async function loadList(key){
+    try{ const r = await store.get(key); return r ? JSON.parse(r.value) : []; }
+    catch(e){ return []; }
+  }
+  async function saveList(key, arr){
+    try{ const r = await store.set(key, JSON.stringify(arr)); if(!r) toast(tr().toast.saveErr); }
+    catch(e){ toast(tr().toast.saveErr); }
+  }
+  async function loadSettings(){
+    const fallback = { headMemberId:null, prant:'', mahanagar:'', nagar:'', gatKramank:'', mandal:'', shakha:'' };
+    try{
+      const r = await store.get('settings');
+      state.settings = r ? Object.assign({}, fallback, JSON.parse(r.value)) : fallback;
+    }
+    catch(e){ state.settings = fallback; }
+    // migrate old combined "mahanagarNagar" field (pre-split) into "nagar" if new fields are empty
+    if(state.settings.mahanagarNagar && !state.settings.mahanagar && !state.settings.nagar){
+      state.settings.nagar = state.settings.mahanagarNagar;
+    }
+  }
+  async function saveSettings(){
+    try{ const r = await store.set('settings', JSON.stringify(state.settings)); if(!r) toast(tr().toast.saveErr); }
+    catch(e){ toast(tr().toast.saveErr); }
+  }
+  async function fetchAttendanceRecord(date){
+    try{
+      const r = await store.get('attendance:'+date);
+      if(!r) return { presence:{}, gameId:null, subhashitamId:null };
+      const parsed = JSON.parse(r.value);
+      if(parsed && parsed.presence) return { presence:parsed.presence||{}, gameId:parsed.gameId||null, subhashitamId:parsed.subhashitamId||null };
+      return { presence: parsed||{}, gameId:null, subhashitamId:null };
+    }catch(e){ return { presence:{}, gameId:null, subhashitamId:null }; }
+  }
+  async function saveAttendanceRecord(date, record){
+    try{ const r = await store.set('attendance:'+date, JSON.stringify(record)); return !!r; }
+    catch(e){ return false; }
+  }
+  async function loadHistoryDates(){
+    try{
+      const r = await store.list('attendance:');
+      state.historyDates = (r && r.keys ? r.keys : []).map(k=>k.replace('attendance:','')).sort().reverse();
+    }catch(e){ state.historyDates = []; }
+  }
+
+  // ---------- Language ----------
+  function setLang(l){
+    state.lang = l;
+    document.getElementById('srLangHi').classList.toggle('active', l==='hi');
+    document.getElementById('srLangEn').classList.toggle('active', l==='en');
+    document.getElementById('srBrandTitle').textContent = tr().brandTitle;
+    document.getElementById('srBrandSub').textContent = tr().brandSub;
+    document.getElementById('srSidebarClose').setAttribute('aria-label', tr().closeMenu);
+    document.getElementById('srHamburger').setAttribute('aria-label', tr().openMenu);
+    document.documentElement.lang = l;
+    buildNav();
+    updateSidebarHead();
+    updateSidebarOrgBox();
+    renderCurrentPage();
+  }
+  document.getElementById('srLangHi').addEventListener('click', ()=>setLang('hi'));
+  document.getElementById('srLangEn').addEventListener('click', ()=>setLang('en'));
+
+  function buildNav(){
+    navEl.innerHTML = pageKeys.map(p=>`<button class="sr-nav-item ${state.page===p?'active':''}" data-page="${p}">${tr().navIcons[p]} <span>${tr().nav[p]}</span></button>`).join('');
+    navEl.querySelectorAll('.sr-nav-item').forEach(btn=>btn.addEventListener('click', ()=>goToPage(btn.getAttribute('data-page'))));
+  }
+
+  function renderCurrentPage(){
+    pageTitleEl.textContent = tr().nav[state.page] || '';
+    if(state.page==='dashboard') renderDashboard();
+    else if(state.page==='members') renderMembers();
+    else if(state.page==='attendance') drawAttendance();
+    else if(state.page==='games') renderGames();
+    else if(state.page==='subhashitam') renderSubhashitam();
+    else if(state.page==='amritvachan') renderAmritVachan();
+    else if(state.page==='ganvesh') renderGanvesh();
+    else if(state.page==='pravas') renderPravas();
+  }
+
+  // ---------- Navigation ----------
+  async function goToPage(p){
+    state.page = p;
+    navEl.querySelectorAll('.sr-nav-item').forEach(b=>b.classList.toggle('active', b.dataset.page===p));
+    pageTitleEl.textContent = tr().nav[p] || '';
+    closeMobileSidebar();
+    contentEl.innerHTML = `<div class="sr-loading">${tr().loading}</div>`;
+    if(p==='dashboard') await renderDashboard();
+    else if(p==='members') renderMembers();
+    else if(p==='attendance') await renderAttendance();
+    else if(p==='games') renderGames();
+    else if(p==='subhashitam') renderSubhashitam();
+    else if(p==='amritvachan') renderAmritVachan();
+    else if(p==='ganvesh') renderGanvesh();
+    else if(p==='pravas') renderPravas();
+  }
+  function openMobileSidebar(){ sidebarEl.classList.add('open'); overlayEl.classList.add('show'); }
+  function closeMobileSidebar(){ sidebarEl.classList.remove('open'); overlayEl.classList.remove('show'); }
+
+  function updateSidebarHead(){
+    const head = state.members.find(m=>m.id===state.settings.headMemberId);
+    const box = document.getElementById('srHeadBox');
+    if(!box) return;
+    const L = tr();
+    if(head){
+      box.innerHTML = `<div class="sr-head-label">${L.head.label}</div>
+        <div class="sr-head-box"><div class="sr-avatar" style="width:28px;height:28px;font-size:11px;">${initials(head.name)}</div><div class="sr-head-name">${esc(head.name)}</div></div>`;
+    }else{
+      box.innerHTML = `<div class="sr-head-empty">${L.head.notSet}<br><button class="sr-head-link" id="srSidebarSetHead">${L.head.chooseLink}</button></div>`;
+      const link = document.getElementById('srSidebarSetHead');
+      if(link) link.addEventListener('click', ()=> goToPage('members'));
+    }
+  }
+
+  function updateSidebarOrgBox(){
+    const box = document.getElementById('srOrgBox');
+    if(!box) return;
+    const L = tr();
+    const s = state.settings;
+    const hasAny = s.prant || s.mahanagar || s.nagar || s.gatKramank || s.mandal || s.shakha;
+
+    if(state.orgEditing){
+      box.innerHTML = `
+        <div class="sr-org-form">
+          <div class="sr-field"><label for="srOrgPrant">${L.org.prant}</label><input id="srOrgPrant" type="text" placeholder="${L.org.prantPh}" value="${esc(s.prant)}"></div>
+          <div class="sr-field"><label for="srOrgMahanagar">${L.org.mahanagar}</label><input id="srOrgMahanagar" type="text" placeholder="${L.org.mahanagarPh}" value="${esc(s.mahanagar)}"></div>
+          <div class="sr-field"><label for="srOrgNagar">${L.org.nagar}</label><input id="srOrgNagar" type="text" placeholder="${L.org.nagarPh}" value="${esc(s.nagar)}"></div>
+          <div class="sr-field"><label for="srOrgMandal">${L.org.mandal}</label><input id="srOrgMandal" type="text" placeholder="${L.org.mandalPh}" value="${esc(s.mandal)}"></div>
+          <div class="sr-field"><label for="srOrgGatKramank">${L.org.gatKramank}</label><input id="srOrgGatKramank" type="text" placeholder="${L.org.gatKramankPh}" value="${esc(s.gatKramank)}"></div>
+          <div class="sr-field"><label for="srOrgShakha">${L.org.shakha}</label><input id="srOrgShakha" type="text" placeholder="${L.org.shakhaPh}" value="${esc(s.shakha)}"></div>
+          <div class="sr-org-form-actions">
+            <button class="sr-btn" id="srOrgSave">${L.org.save}</button>
+            <button class="sr-btn secondary" id="srOrgCancel">${L.org.cancel}</button>
+          </div>
+        </div>`;
+      document.getElementById('srOrgSave').addEventListener('click', onSaveOrgBox);
+      document.getElementById('srOrgCancel').addEventListener('click', ()=>{ state.orgEditing=false; updateSidebarOrgBox(); });
+    }else if(hasAny){
+      box.innerHTML = `
+        ${s.prant ? `<div class="sr-org-row"><span>${L.org.prant}</span><b>${esc(s.prant)}</b></div>` : ''}
+        ${s.mahanagar ? `<div class="sr-org-row"><span>${L.org.mahanagar}</span><b>${esc(s.mahanagar)}</b></div>` : ''}
+        ${s.nagar ? `<div class="sr-org-row"><span>${L.org.nagar}</span><b>${esc(s.nagar)}</b></div>` : ''}
+        ${s.mandal ? `<div class="sr-org-row"><span>${L.org.mandal}</span><b>${esc(s.mandal)}</b></div>` : ''}
+        ${s.gatKramank ? `<div class="sr-org-row"><span>${L.org.gatKramank}</span><b>${esc(s.gatKramank)}</b></div>` : ''}
+        ${s.shakha ? `<div class="sr-org-row"><span>${L.org.shakha}</span><b>${esc(s.shakha)}</b></div>` : ''}
+        <button class="sr-org-edit-link" id="srOrgEditLink">${L.org.editLink}</button>`;
+      document.getElementById('srOrgEditLink').addEventListener('click', ()=>{ state.orgEditing=true; updateSidebarOrgBox(); });
+    }else{
+      box.innerHTML = `<div class="sr-org-empty">${L.org.notSet}</div>
+        <button class="sr-org-edit-link" id="srOrgEditLink">${L.org.editLink}</button>`;
+      document.getElementById('srOrgEditLink').addEventListener('click', ()=>{ state.orgEditing=true; updateSidebarOrgBox(); });
+    }
+  }
+
+  async function onSaveOrgBox(){
+    state.settings.prant = document.getElementById('srOrgPrant').value.trim();
+    state.settings.mahanagar = document.getElementById('srOrgMahanagar').value.trim();
+    state.settings.nagar = document.getElementById('srOrgNagar').value.trim();
+    state.settings.mandal = document.getElementById('srOrgMandal').value.trim();
+    state.settings.gatKramank = document.getElementById('srOrgGatKramank').value.trim();
+    state.settings.shakha = document.getElementById('srOrgShakha').value.trim();
+    state.orgEditing = false;
+    await saveSettings();
+    updateSidebarOrgBox();
+    if(state.page==='dashboard') await renderDashboard();
+    toast(tr().org.saved);
+  }
+
+  // ---------- Dashboard ----------
+  async function renderDashboard(){
+    const L = tr();
+    const todayRec = await fetchAttendanceRecord(todayStr());
+    const total = state.members.length;
+    const present = Object.values(todayRec.presence||{}).filter(v=>attStatus(v)==='present').length;
+    const percent = total ? Math.round((present/total)*100) : 0;
+    const head = state.members.find(m=>m.id===state.settings.headMemberId);
+    let subh = null, isToday = false;
+    if(todayRec.subhashitamId){ subh = state.subhashitam.find(s=>s.id===todayRec.subhashitamId); isToday = !!subh; }
+    if(!subh && state.subhashitam.length){ subh = state.subhashitam[Math.floor(Math.random()*state.subhashitam.length)]; }
+
+    contentEl.innerHTML = `
+      <div class="sr-card" style="display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;">
+        <div>
+          <h2 style="margin-bottom:4px;">${L.dash.today(formatDate(todayStr()))}</h2>
+          <p style="margin:0;color:var(--indigo-soft);font-size:13.5px;">
+            ${head ? `${L.dash.headPrefix}<b style="color:var(--indigo);">${esc(head.name)}</b>` : `<button class="sr-head-link" data-goto="members">${L.dash.chooseHead}</button>`}
+          </p>
+          ${(state.settings.prant||state.settings.mahanagar||state.settings.nagar||state.settings.gatKramank||state.settings.mandal||state.settings.shakha) ? `
+          <p style="margin:6px 0 0;color:var(--indigo-soft);font-size:12.5px;">
+            ${[
+              state.settings.prant ? `${L.org.prant}: <b style="color:var(--indigo);">${esc(state.settings.prant)}</b>` : '',
+              state.settings.mahanagar ? `${L.org.mahanagar}: <b style="color:var(--indigo);">${esc(state.settings.mahanagar)}</b>` : '',
+              state.settings.nagar ? `${L.org.nagar}: <b style="color:var(--indigo);">${esc(state.settings.nagar)}</b>` : '',
+              state.settings.mandal ? `${L.org.mandal}: <b style="color:var(--indigo);">${esc(state.settings.mandal)}</b>` : '',
+              state.settings.gatKramank ? `${L.org.gatKramank}: <b style="color:var(--indigo);">${esc(state.settings.gatKramank)}</b>` : '',
+              state.settings.shakha ? `${L.org.shakha}: <b style="color:var(--indigo);">${esc(state.settings.shakha)}</b>` : ''
+            ].filter(Boolean).join(' &nbsp;·&nbsp; ')}
+          </p>` : ''}
+        </div>
+        ${ringSvg(percent)}
+      </div>
+
+      <div class="sr-dash-grid">
+        <button class="sr-nav-card" data-goto="members">
+          <div class="sr-nav-card-icon">🧑‍🤝‍🧑</div>
+          <div><div class="sr-nav-card-title">${L.dash.members(total)}</div><div class="sr-nav-card-sub">${L.dash.viewMembers}</div></div>
+        </button>
+        <button class="sr-nav-card" data-goto="attendance">
+          <div class="sr-nav-card-icon">✅</div>
+          <div><div class="sr-nav-card-title">${L.dash.present(present,total)}</div><div class="sr-nav-card-sub">${L.dash.fillAtt}</div></div>
+        </button>
+        <button class="sr-nav-card" data-goto="games">
+          <div class="sr-nav-card-icon">🤾</div>
+          <div><div class="sr-nav-card-title">${L.dash.games(state.games.length)}</div><div class="sr-nav-card-sub">${L.dash.viewGames}</div></div>
+        </button>
+        <button class="sr-nav-card" data-goto="subhashitam">
+          <div class="sr-nav-card-icon">📜</div>
+          <div><div class="sr-nav-card-title">${L.dash.subh(state.subhashitam.length)}</div><div class="sr-nav-card-sub">${L.dash.viewSubh}</div></div>
+        </button>
+        <button class="sr-nav-card" data-goto="amritvachan">
+          <div class="sr-nav-card-icon">🪔</div>
+          <div><div class="sr-nav-card-title">${L.dash.amrit(state.amritvachan.length)}</div><div class="sr-nav-card-sub">${L.dash.viewAmrit}</div></div>
+        </button>
+      </div>
+
+      <div class="sr-card sr-spotlight">
+        <div class="sr-spotlight-label">${isToday ? L.dash.todaySubh : (subh ? L.dash.suggestedSubh : L.dash.subhTitle)}</div>
+        ${subh ? `
+          <div class="sr-subh-sanskrit">${esc(subh.sanskrit)}</div>
+          <div class="sr-subh-meaning">${esc(subh.meaning)}</div>
+          ${subh.source ? `<div class="sr-subh-source">— ${esc(subh.source)}</div>` : ''}
+        ` : `<p style="margin:0;color:var(--indigo-soft);font-size:13.5px;">${L.dash.emptySubh}<button class="sr-head-link" data-goto="subhashitam">${L.dash.addSubhLink}</button></p>`}
+      </div>
+    `;
+    contentEl.querySelectorAll('[data-goto]').forEach(b=>b.addEventListener('click', ()=> goToPage(b.getAttribute('data-goto'))));
+  }
+
+  // ---------- Members ----------
+  function renderMembers(){
+    const L = tr().members;
+    const editing = state.members.find(m=>m.id===state.editingMemberId);
+    contentEl.innerHTML = `
+      <div class="sr-card">
+        <h2>${state.editingMemberId ? L.editTitle : L.addTitle}</h2>
+        <form id="srMemberForm">
+          <div class="sr-field"><label for="srName">${L.name}</label><input id="srName" type="text" placeholder="${L.namePh}" required value="${editing?esc(editing.name):''}"></div>
+          <div class="sr-row2">
+            <div class="sr-field"><label for="srDayitva">${L.role}</label><input id="srDayitva" type="text" placeholder="${L.rolePh}" value="${editing?esc(editing.dayitva):''}"></div>
+            <div class="sr-field"><label for="srMobile">${L.mobile}</label><input id="srMobile" type="tel" placeholder="${L.mobilePh}" pattern="[0-9+ -]{6,15}" value="${editing?esc(editing.mobile):''}"></div>
+          </div>
+          <div class="sr-field"><label for="srAddress">${L.address}</label><input id="srAddress" type="text" placeholder="${L.addressPh}" value="${editing?esc(editing.address):''}"></div>
+          <div class="sr-field">
+            <label>${L.shikshan}</label>
+            <div style="display:flex;flex-direction:column;gap:7px;margin-top:2px;">
+              ${(function(){
+                // options stored/displayed using canonical Hindi values; label shown per language
+                const hiShikshan = T.hi.members.shikshanTypes;
+                const editShikshan = (editing && editing.shikshan) || [];
+                return hiShikshan.map((hiVal, idx)=>`
+                  <label style="display:flex;align-items:center;gap:8px;font-size:13.5px;font-weight:400;text-transform:none;letter-spacing:normal;color:var(--indigo);cursor:pointer;">
+                    <input type="checkbox" data-shikshan="${esc(hiVal)}" ${editShikshan.includes(hiVal)?'checked':''} style="width:auto;">
+                    ${esc(L.shikshanTypes[idx])}
+                  </label>
+                `).join('');
+              })()}
+            </div>
+          </div>
+          <div style="display:flex;gap:10px;margin-top:4px;">
+            <button type="submit" class="sr-btn">${state.editingMemberId?L.save:L.add}</button>
+            ${state.editingMemberId?`<button type="button" class="sr-btn secondary" id="srCancelEdit">${L.cancel}</button>`:''}
+          </div>
+        </form>
+      </div>
+
+      <div class="sr-card">
+        <h2>${L.allMembers(state.members.length)}</h2>
+        ${state.members.length ? `<p class="sr-note" style="margin:-6px 4px 10px;">${L.starNote}</p>` : ''}
+        <div id="srMemberList">
+          ${state.members.length===0 ? emptyBlock('🧑‍🤝‍🧑', L.empty) :
+            state.members.map(m=>`
+              <div class="sr-member">
+                <button class="sr-star-btn ${state.settings.headMemberId===m.id?'on':''}" data-star="${m.id}" title="${L.makeHead(m.name)}" aria-label="${L.makeHead(esc(m.name))}">${state.settings.headMemberId===m.id?'★':'☆'}</button>
+                <div class="sr-avatar">${initials(m.name)}</div>
+                <div class="sr-member-info">
+                  <div class="sr-member-name">${esc(m.name)}${state.settings.headMemberId===m.id?`<span class="sr-badge-head">${L.headBadge}</span>`:''}</div>
+                  <div class="sr-member-meta">${esc(m.dayitva || '—')} ${m.mobile ? '&middot; ' + esc(m.mobile) : ''}</div>
+                  ${(m.shikshan && m.shikshan.length) ? `<div style="margin-top:5px;display:flex;flex-wrap:wrap;gap:5px;">${m.shikshan.map(hiVal=>{ const idx=T.hi.members.shikshanTypes.indexOf(hiVal); const label = idx>=0 ? tr().members.shikshanTypes[idx] : hiVal; return `<span class="sr-type-tag">${esc(label)}</span>`; }).join('')}</div>` : ''}
+                </div>
+                <div class="sr-member-actions">
+                  <button class="sr-icon-btn" data-edit="${m.id}" title="${L.edit}" aria-label="${L.edit}">✎</button>
+                  <button class="sr-icon-btn" data-del="${m.id}" title="${L.del}" aria-label="${L.del}">🗑</button>
+                </div>
+              </div>
+            `).join('')}
+        </div>
+      </div>
+    `;
+    document.getElementById('srMemberForm').addEventListener('submit', onSubmitMember);
+    const cancelBtn = document.getElementById('srCancelEdit');
+    if(cancelBtn) cancelBtn.addEventListener('click', ()=>{ state.editingMemberId=null; renderMembers(); });
+    contentEl.querySelectorAll('[data-edit]').forEach(b=>b.addEventListener('click', ()=>{ state.editingMemberId=b.getAttribute('data-edit'); renderMembers(); document.getElementById('srName').focus(); }));
+    contentEl.querySelectorAll('[data-del]').forEach(b=>b.addEventListener('click', ()=>onDeleteMember(b.getAttribute('data-del'))));
+    contentEl.querySelectorAll('[data-star]').forEach(b=>b.addEventListener('click', ()=>onToggleHead(b.getAttribute('data-star'))));
+  }
+
+  async function onSubmitMember(e){
+    e.preventDefault();
+    const name = document.getElementById('srName').value.trim();
+    const dayitva = document.getElementById('srDayitva').value.trim();
+    const mobile = document.getElementById('srMobile').value.trim();
+    const address = document.getElementById('srAddress').value.trim();
+    const shikshan = Array.from(document.querySelectorAll('[data-shikshan]:checked')).map(el=>el.getAttribute('data-shikshan'));
+    if(!name) return;
+    const L = tr().toast;
+    if(state.editingMemberId){
+      const m = state.members.find(x=>x.id===state.editingMemberId);
+      if(m){ m.name=name; m.dayitva=dayitva; m.mobile=mobile; m.address=address; m.shikshan=shikshan; }
+      state.editingMemberId = null;
+      toast(L.memberUpdated);
+    }else{
+      state.members.push({ id: uid('m'), name, dayitva, mobile, address, shikshan });
+      toast(L.memberAdded);
+    }
+    renderMembers();
+    updateSidebarHead();
+    await saveList('members', state.members);
+  }
+
+  async function onDeleteMember(id){
+    const m = state.members.find(x=>x.id===id);
+    if(!m) return;
+    if(!confirm(tr().confirm.delMember(m.name))) return;
+    state.members = state.members.filter(x=>x.id!==id);
+    if(state.settings.headMemberId===id){ state.settings.headMemberId=null; await saveSettings(); }
+    renderMembers();
+    updateSidebarHead();
+    await saveList('members', state.members);
+    toast(tr().toast.memberDeleted);
+  }
+
+  async function onToggleHead(id){
+    state.settings.headMemberId = (state.settings.headMemberId===id) ? null : id;
+    renderMembers();
+    updateSidebarHead();
+    await saveSettings();
+    toast(state.settings.headMemberId ? tr().toast.headSet : tr().toast.headRemoved);
+  }
+
+  // ---------- Games ----------
+  function renderGames(){
+    const L = tr().games;
+    const editing = state.games.find(g=>g.id===state.editingGameId);
+    contentEl.innerHTML = `
+      <div class="sr-card">
+        <h2>${state.editingGameId?L.editTitle:L.addTitle}</h2>
+        <form id="srGameForm">
+          <div class="sr-field"><label for="srGameName">${L.name}</label><input id="srGameName" type="text" placeholder="${L.namePh}" required value="${editing?esc(editing.name):''}"></div>
+          <div class="sr-field"><label for="srGameType">${L.type}</label>
+            <select id="srGameType">
+              <option value="">${L.typeSelect}</option>
+              ${tr().hi_lock ? '' : ''}
+              ${(function(){
+                // options stored/displayed using canonical Hindi values; label shown per language
+                const hiTypes = T.hi.games.types;
+                return hiTypes.map((hiVal, idx)=>`<option value="${hiVal}" ${editing&&editing.type===hiVal?'selected':''}>${L.types[idx]}</option>`).join('');
+              })()}
+            </select>
+          </div>
+          <div class="sr-field"><label for="srGameDesc">${L.desc}</label><textarea id="srGameDesc" placeholder="${L.descPh}">${editing?esc(editing.description):''}</textarea></div>
+          <div style="display:flex;gap:10px;margin-top:4px;">
+            <button type="submit" class="sr-btn">${state.editingGameId?L.save:L.add}</button>
+            ${state.editingGameId?`<button type="button" class="sr-btn secondary" id="srCancelGameEdit">${L.cancel}</button>`:''}
+          </div>
+        </form>
+      </div>
+      <div class="sr-card">
+        <h2>${L.all(state.games.length)}</h2>
+        <div id="srGameList">
+          ${state.games.length===0 ? emptyBlock('🤾', L.empty) :
+            state.games.map(g=>`
+              <div class="sr-member" style="align-items:flex-start;">
+                <div class="sr-avatar" style="background:var(--sage);">${esc((g.name||'?')[0])}</div>
+                <div class="sr-member-info">
+                  <div class="sr-member-name">${esc(g.name)}</div>
+                  ${g.type?`<span class="sr-type-tag">${esc(typeLabel(g.type))}</span>`:''}
+                  ${g.description?`<div class="sr-member-meta" style="white-space:normal;margin-top:5px;">${esc(g.description)}</div>`:''}
+                </div>
+                <div class="sr-member-actions">
+                  <button class="sr-icon-btn" data-editgame="${g.id}" title="${L.edit}" aria-label="${L.edit}">✎</button>
+                  <button class="sr-icon-btn" data-delgame="${g.id}" title="${L.del}" aria-label="${L.del}">🗑</button>
+                </div>
+              </div>
+            `).join('')}
+        </div>
+      </div>
+    `;
+    document.getElementById('srGameForm').addEventListener('submit', onSubmitGame);
+    const cancel = document.getElementById('srCancelGameEdit');
+    if(cancel) cancel.addEventListener('click', ()=>{ state.editingGameId=null; renderGames(); });
+    contentEl.querySelectorAll('[data-editgame]').forEach(b=>b.addEventListener('click', ()=>{ state.editingGameId=b.getAttribute('data-editgame'); renderGames(); }));
+    contentEl.querySelectorAll('[data-delgame]').forEach(b=>b.addEventListener('click', ()=>onDeleteGame(b.getAttribute('data-delgame'))));
+  }
+
+  async function onSubmitGame(e){
+    e.preventDefault();
+    const name = document.getElementById('srGameName').value.trim();
+    const type = document.getElementById('srGameType').value; // canonical Hindi value
+    const description = document.getElementById('srGameDesc').value.trim();
+    if(!name) return;
+    const L = tr().toast;
+    if(state.editingGameId){
+      const g = state.games.find(x=>x.id===state.editingGameId);
+      if(g){ g.name=name; g.type=type; g.description=description; }
+      state.editingGameId = null;
+      toast(L.gameUpdated);
+    }else{
+      state.games.push({ id: uid('g'), name, type, description });
+      toast(L.gameAdded);
+    }
+    renderGames();
+    await saveList('games', state.games);
+  }
+
+  async function onDeleteGame(id){
+    const g = state.games.find(x=>x.id===id);
+    if(!g) return;
+    if(!confirm(tr().confirm.delGame(g.name))) return;
+    state.games = state.games.filter(x=>x.id!==id);
+    renderGames();
+    await saveList('games', state.games);
+    toast(tr().toast.gameDeleted);
+  }
+
+  // ---------- Pravas ----------
+  function renderPravas(){
+    const L = tr().pravasPage;
+    const editing = state.pravas.find(p=>p.id===state.editingPravasId);
+    contentEl.innerHTML = `
+      <div class="sr-card">
+        <h2>${state.editingPravasId?L.editTitle:L.addTitle}</h2>
+        <form id="srPravasForm">
+          <div class="sr-field"><label for="srPravasName">${L.name}</label><input id="srPravasName" type="text" placeholder="${L.namePh}" required value="${editing?esc(editing.name):''}"></div>
+          <div class="sr-row2">
+            <div class="sr-field"><label for="srPravasDayitva">${L.dayitva}</label><input id="srPravasDayitva" type="text" placeholder="${L.dayitvaPh}" value="${editing?esc(editing.dayitva):''}"></div>
+            <div class="sr-field"><label for="srPravasSanghAge">${L.sanghAge}</label><input id="srPravasSanghAge" type="text" placeholder="${L.sanghAgePh}" value="${editing?esc(editing.sanghAge):''}"></div>
+          </div>
+          <div class="sr-row2">
+            <div class="sr-field"><label for="srPravasPlace">${L.place}</label><input id="srPravasPlace" type="text" placeholder="${L.placePh}" value="${editing?esc(editing.place):''}"></div>
+            <div class="sr-field"><label for="srPravasDate">${L.date}</label><input id="srPravasDate" type="date" value="${editing&&editing.date?esc(editing.date):''}"></div>
+          </div>
+          <div class="sr-field"><label for="srPravasPurpose">${L.purpose}</label><textarea id="srPravasPurpose" placeholder="${L.purposePh}">${editing?esc(editing.purpose):''}</textarea></div>
+          <div style="display:flex;gap:10px;margin-top:4px;">
+            <button type="submit" class="sr-btn">${state.editingPravasId?L.save:L.add}</button>
+            ${state.editingPravasId?`<button type="button" class="sr-btn secondary" id="srCancelPravasEdit">${L.cancel}</button>`:''}
+          </div>
+        </form>
+      </div>
+      <div class="sr-card">
+        <h2>${L.all(state.pravas.length)}</h2>
+        <div id="srPravasList">
+          ${state.pravas.length===0 ? emptyBlock('🧳', L.empty) :
+            state.pravas.map(p=>`
+              <div class="sr-member" style="align-items:flex-start;">
+                <div class="sr-avatar" style="background:var(--gold);">${esc((p.name||'?')[0])}</div>
+                <div class="sr-member-info">
+                  <div class="sr-member-name">${esc(p.name)}</div>
+                  <div class="sr-member-meta">${p.dayitva?esc(p.dayitva):'—'} ${p.sanghAge ? '&middot; ' + L.sanghAge + ': ' + esc(p.sanghAge) : ''}</div>
+                  ${(p.place||p.date) ? `<div class="sr-member-meta" style="white-space:normal;margin-top:3px;">${p.place?esc(p.place):''}${p.place&&p.date?' &middot; ':''}${p.date?esc(formatDate(p.date)):''}</div>` : ''}
+                  ${p.purpose ? `<div class="sr-member-meta" style="white-space:normal;margin-top:5px;">${esc(p.purpose)}</div>` : ''}
+                </div>
+                <div class="sr-member-actions">
+                  <button class="sr-icon-btn" data-editpravas="${p.id}" title="${L.edit}" aria-label="${L.edit}">✎</button>
+                  <button class="sr-icon-btn" data-delpravas="${p.id}" title="${L.del}" aria-label="${L.del}">🗑</button>
+                </div>
+              </div>
+            `).join('')}
+        </div>
+      </div>
+    `;
+    document.getElementById('srPravasForm').addEventListener('submit', onSubmitPravas);
+    const cancel = document.getElementById('srCancelPravasEdit');
+    if(cancel) cancel.addEventListener('click', ()=>{ state.editingPravasId=null; renderPravas(); });
+    contentEl.querySelectorAll('[data-editpravas]').forEach(b=>b.addEventListener('click', ()=>{ state.editingPravasId=b.getAttribute('data-editpravas'); renderPravas(); }));
+    contentEl.querySelectorAll('[data-delpravas]').forEach(b=>b.addEventListener('click', ()=>onDeletePravas(b.getAttribute('data-delpravas'))));
+  }
+
+  async function onSubmitPravas(e){
+    e.preventDefault();
+    const name = document.getElementById('srPravasName').value.trim();
+    const dayitva = document.getElementById('srPravasDayitva').value.trim();
+    const sanghAge = document.getElementById('srPravasSanghAge').value.trim();
+    const place = document.getElementById('srPravasPlace').value.trim();
+    const date = document.getElementById('srPravasDate').value;
+    const purpose = document.getElementById('srPravasPurpose').value.trim();
+    if(!name) return;
+    const L = tr().toast;
+    if(state.editingPravasId){
+      const p = state.pravas.find(x=>x.id===state.editingPravasId);
+      if(p){ p.name=name; p.dayitva=dayitva; p.sanghAge=sanghAge; p.place=place; p.date=date; p.purpose=purpose; }
+      state.editingPravasId = null;
+      toast(L.pravasUpdated);
+    }else{
+      state.pravas.push({ id: uid('pv'), name, dayitva, sanghAge, place, date, purpose });
+      toast(L.pravasAdded);
+    }
+    renderPravas();
+    await saveList('pravas', state.pravas);
+  }
+
+  async function onDeletePravas(id){
+    const p = state.pravas.find(x=>x.id===id);
+    if(!p) return;
+    if(!confirm(tr().confirm.delPravas(p.name))) return;
+    state.pravas = state.pravas.filter(x=>x.id!==id);
+    renderPravas();
+    await saveList('pravas', state.pravas);
+    toast(tr().toast.pravasDeleted);
+  }
+
+  // ---------- Subhashitam ----------
+  function renderSubhashitam(){
+    const L = tr().subh;
+    const editing = state.subhashitam.find(s=>s.id===state.editingSubhId);
+    contentEl.innerHTML = `
+      <div class="sr-card">
+        <h2>${state.editingSubhId?L.editTitle:L.addTitle}</h2>
+        <form id="srSubhForm">
+          <div class="sr-field"><label for="srSubhSanskrit">${L.sanskrit}</label><textarea id="srSubhSanskrit" placeholder="${L.sanskritPh}" required style="font-family:'Tiro Devanagari Hindi',serif;font-size:15px;">${editing?esc(editing.sanskrit):''}</textarea></div>
+          <div class="sr-field"><label for="srSubhMeaning">${L.meaning}</label><textarea id="srSubhMeaning" placeholder="${L.meaningPh}" required>${editing?esc(editing.meaning):''}</textarea></div>
+          <div class="sr-field"><label for="srSubhSource">${L.source}</label><input id="srSubhSource" type="text" placeholder="${L.sourcePh}" value="${editing?esc(editing.source):''}"></div>
+          <div style="display:flex;gap:10px;margin-top:4px;">
+            <button type="submit" class="sr-btn">${state.editingSubhId?L.save:L.add}</button>
+            ${state.editingSubhId?`<button type="button" class="sr-btn secondary" id="srCancelSubhEdit">${L.cancel}</button>`:''}
+          </div>
+        </form>
+      </div>
+      <div class="sr-card">
+        <h2>${L.collection(state.subhashitam.length)}</h2>
+        <div id="srSubhList">
+          ${state.subhashitam.length===0 ? emptyBlock('📜', L.empty) :
+            state.subhashitam.map(s=>`
+              <div class="sr-subh-card">
+                <div class="sr-subh-sanskrit">${esc(s.sanskrit)}</div>
+                <div class="sr-subh-meaning">${esc(s.meaning)}</div>
+                ${s.source?`<div class="sr-subh-source">— ${esc(s.source)}</div>`:''}
+                <div class="sr-subh-actions">
+                  <button class="sr-icon-btn" data-editsubh="${s.id}" title="${L.edit}" aria-label="${L.edit}">✎</button>
+                  <button class="sr-icon-btn" data-delsubh="${s.id}" title="${L.del}" aria-label="${L.del}">🗑</button>
+                </div>
+              </div>
+            `).join('')}
+        </div>
+      </div>
+    `;
+    document.getElementById('srSubhForm').addEventListener('submit', onSubmitSubh);
+    const cancel = document.getElementById('srCancelSubhEdit');
+    if(cancel) cancel.addEventListener('click', ()=>{ state.editingSubhId=null; renderSubhashitam(); });
+    contentEl.querySelectorAll('[data-editsubh]').forEach(b=>b.addEventListener('click', ()=>{ state.editingSubhId=b.getAttribute('data-editsubh'); renderSubhashitam(); }));
+    contentEl.querySelectorAll('[data-delsubh]').forEach(b=>b.addEventListener('click', ()=>onDeleteSubh(b.getAttribute('data-delsubh'))));
+  }
+
+  async function onSubmitSubh(e){
+    e.preventDefault();
+    const sanskrit = document.getElementById('srSubhSanskrit').value.trim();
+    const meaning = document.getElementById('srSubhMeaning').value.trim();
+    const source = document.getElementById('srSubhSource').value.trim();
+    if(!sanskrit || !meaning) return;
+    const L = tr().toast;
+    if(state.editingSubhId){
+      const s = state.subhashitam.find(x=>x.id===state.editingSubhId);
+      if(s){ s.sanskrit=sanskrit; s.meaning=meaning; s.source=source; }
+      state.editingSubhId = null;
+      toast(L.subhUpdated);
+    }else{
+      state.subhashitam.push({ id: uid('s'), sanskrit, meaning, source });
+      toast(L.subhAdded);
+    }
+    renderSubhashitam();
+    await saveList('subhashitam', state.subhashitam);
+  }
+
+  async function onDeleteSubh(id){
+    const s = state.subhashitam.find(x=>x.id===id);
+    if(!s) return;
+    if(!confirm(tr().confirm.delSubh)) return;
+    state.subhashitam = state.subhashitam.filter(x=>x.id!==id);
+    renderSubhashitam();
+    await saveList('subhashitam', state.subhashitam);
+    toast(tr().toast.subhDeleted);
+  }
+
+  // ---------- Amrit Vachan ----------
+  function renderAmritVachan(){
+    const L = tr().amrit;
+    const editing = state.amritvachan.find(a=>a.id===state.editingAmritId);
+    contentEl.innerHTML = `
+      <div class="sr-card">
+        <h2>${state.editingAmritId?L.editTitle:L.addTitle}</h2>
+        <form id="srAmritForm">
+          <div class="sr-field"><label for="srAmritText">${L.text}</label><textarea id="srAmritText" placeholder="${L.textPh}" required style="font-family:'Tiro Devanagari Hindi',serif;font-size:15px;">${editing?esc(editing.text):''}</textarea></div>
+          <div class="sr-row2">
+            <div class="sr-field"><label for="srAmritAuthor">${L.author}</label><input id="srAmritAuthor" type="text" placeholder="${L.authorPh}" value="${editing?esc(editing.author):''}"></div>
+            <div class="sr-field"><label for="srAmritContext">${L.context}</label><input id="srAmritContext" type="text" placeholder="${L.contextPh}" value="${editing?esc(editing.context):''}"></div>
+          </div>
+          <div style="display:flex;gap:10px;margin-top:4px;">
+            <button type="submit" class="sr-btn">${state.editingAmritId?L.save:L.add}</button>
+            ${state.editingAmritId?`<button type="button" class="sr-btn secondary" id="srCancelAmritEdit">${L.cancel}</button>`:''}
+          </div>
+        </form>
+      </div>
+      <div class="sr-card">
+        <h2>${L.collection(state.amritvachan.length)}</h2>
+        <div id="srAmritList">
+          ${state.amritvachan.length===0 ? emptyBlock('🪔', L.empty) :
+            state.amritvachan.map(a=>`
+              <div class="sr-amrit-card">
+                <div class="sr-amrit-text">${esc(a.text)}</div>
+                ${a.author?`<div class="sr-amrit-author">— ${esc(a.author)}</div>`:''}
+                ${a.context?`<div class="sr-amrit-context">${esc(a.context)}</div>`:''}
+                ${a.sourceUrl?`<div class="sr-amrit-context"><a href="${esc(a.sourceUrl)}" target="_blank" rel="noopener noreferrer">RSS वेबसाइट पर स्रोत देखें ↗</a></div>`:''}
+                <div class="sr-amrit-actions">
+                  <button class="sr-icon-btn" data-editamrit="${a.id}" title="${L.edit}" aria-label="${L.edit}">✎</button>
+                  <button class="sr-icon-btn" data-delamrit="${a.id}" title="${L.del}" aria-label="${L.del}">🗑</button>
+                </div>
+              </div>
+            `).join('')}
+        </div>
+      </div>
+    `;
+    document.getElementById('srAmritForm').addEventListener('submit', onSubmitAmrit);
+    const cancel = document.getElementById('srCancelAmritEdit');
+    if(cancel) cancel.addEventListener('click', ()=>{ state.editingAmritId=null; renderAmritVachan(); });
+    contentEl.querySelectorAll('[data-editamrit]').forEach(b=>b.addEventListener('click', ()=>{ state.editingAmritId=b.getAttribute('data-editamrit'); renderAmritVachan(); }));
+    contentEl.querySelectorAll('[data-delamrit]').forEach(b=>b.addEventListener('click', ()=>onDeleteAmrit(b.getAttribute('data-delamrit'))));
+  }
+
+  async function onSubmitAmrit(e){
+    e.preventDefault();
+    const text = document.getElementById('srAmritText').value.trim();
+    const author = document.getElementById('srAmritAuthor').value.trim();
+    const context = document.getElementById('srAmritContext').value.trim();
+    if(!text) return;
+    const L = tr().toast;
+    if(state.editingAmritId){
+      const a = state.amritvachan.find(x=>x.id===state.editingAmritId);
+      if(a){ a.text=text; a.author=author; a.context=context; }
+      state.editingAmritId = null;
+      toast(L.amritUpdated);
+    }else{
+      state.amritvachan.push({ id: uid('av'), text, author, context });
+      toast(L.amritAdded);
+    }
+    renderAmritVachan();
+    await saveList('amritvachan', state.amritvachan);
+  }
+
+  async function onDeleteAmrit(id){
+    const a = state.amritvachan.find(x=>x.id===id);
+    if(!a) return;
+    if(!confirm(tr().confirm.delAmrit)) return;
+    state.amritvachan = state.amritvachan.filter(x=>x.id!==id);
+    renderAmritVachan();
+    await saveList('amritvachan', state.amritvachan);
+    toast(tr().toast.amritDeleted);
+  }
+
+  // ---------- Ganvesh ----------
+  function renderGanvesh(){
+    const L = tr().ganvesh;
+    contentEl.innerHTML = `
+      <div class="sr-card">
+        <h2>${L.title}</h2>
+        <p class="sr-note" style="margin:0 0 14px;font-size:13.5px;">${L.intro}</p>
+        <div class="sr-ganvesh-grid">
+          <div class="sr-ganvesh-item">
+            <h3>${L.full}</h3>
+            <ul>${L.fullItems.map(i=>`<li>${i}</li>`).join('')}</ul>
+          </div>
+          <div class="sr-ganvesh-item">
+            <h3>${L.trad}</h3>
+            <ul>${L.tradItems.map(i=>`<li>${i}</li>`).join('')}</ul>
+          </div>
+        </div>
+        <p class="sr-note">${L.toolsNote}</p>
+      </div>
+
+      <div class="sr-card">
+        <h2>${L.sourceHeading}</h2>
+        <div class="sr-founder-grid">
+          <div class="sr-founder-card">
+            <img class="sr-founder-photo" referrerpolicy="no-referrer" loading="lazy"
+                 src="https://commons.wikimedia.org/wiki/Special:FilePath/Dr%20Keshav%20Baliram%20Hedgewar.jpg"
+                 alt="${L.founder1Name}">
+            <div class="sr-founder-name">${L.founder1Name}</div>
+            <div class="sr-founder-role">${L.founder1Role}</div>
+            <div class="sr-founder-desc">${L.founder1Desc}</div>
+          </div>
+          <div class="sr-founder-card">
+            <img class="sr-founder-photo" referrerpolicy="no-referrer" loading="lazy"
+                 src="https://commons.wikimedia.org/wiki/Special:FilePath/M%20S%20Golwalkar.jpg"
+                 alt="${L.founder2Name}">
+            <div class="sr-founder-name">${L.founder2Name}</div>
+            <div class="sr-founder-role">${L.founder2Role}</div>
+            <div class="sr-founder-desc">${L.founder2Desc}</div>
+          </div>
+        </div>
+        <p class="sr-note">${L.imgSource}</p>
+      </div>
+    `;
+  }
+
+  // ---------- Attendance ----------
+  async function renderAttendance(){
+    state.attRecord = await fetchAttendanceRecord(state.attDate);
+    await loadHistoryDates();
+    drawAttendance();
+  }
+
+  function drawAttendance(){
+    const L = tr().att;
+    const total = state.members.length;
+    const presentCount = Object.values(state.attRecord.presence||{}).filter(v=>attStatus(v)==='present').length;
+    const percent = total ? Math.round((presentCount/total)*100) : 0;
+    const selSubh = state.subhashitam.find(s=>s.id===state.attRecord.subhashitamId);
+
+    contentEl.innerHTML = `
+      <div class="sr-card">
+        <div class="sr-att-top">
+          <div>
+            <label for="srDatePick" style="font-size:12px;font-weight:600;color:var(--indigo-soft);display:block;margin-bottom:5px;text-transform:uppercase;letter-spacing:0.4px;">${L.pickDate}</label>
+            <input type="date" id="srDatePick" class="sr-date-input" value="${state.attDate}" max="${todayStr()}">
+          </div>
+          <div class="sr-ring-wrap">${ringSvg(percent)}<div class="sr-ring-label"><b>${presentCount} / ${total}</b>${L.presentMembers}</div></div>
+        </div>
+      </div>
+
+      <div class="sr-card">
+        <h2>${L.activity}</h2>
+        <div class="sr-row2">
+          <div class="sr-field"><label for="srAttGame">${L.game}</label>
+            <select id="srAttGame">
+              <option value="">${L.none}</option>
+              ${state.games.map(g=>`<option value="${g.id}" ${state.attRecord.gameId===g.id?'selected':''}>${esc(g.name)}</option>`).join('')}
+            </select>
+          </div>
+          <div class="sr-field"><label for="srAttSubh">${L.subhashitam}</label>
+            <select id="srAttSubh">
+              <option value="">${L.none}</option>
+              ${state.subhashitam.map(s=>`<option value="${s.id}" ${state.attRecord.subhashitamId===s.id?'selected':''}>${esc(truncate(s.sanskrit,30))}</option>`).join('')}
+            </select>
+          </div>
+        </div>
+        ${(state.games.length===0 && state.subhashitam.length===0) ? `<p class="sr-note">${L.emptyNote1}<button class="sr-head-link" data-goto="games">${L.addGameLink}</button> · <button class="sr-head-link" data-goto="subhashitam">${L.addSubhLink}</button></p>` : ''}
+        ${selSubh ? `<div class="sr-spotlight" style="margin-top:12px;padding:12px 14px;"><div class="sr-subh-sanskrit" style="font-size:14.5px;">${esc(selSubh.sanskrit)}</div><div class="sr-subh-meaning">${esc(selSubh.meaning)}</div></div>` : ''}
+      </div>
+
+      <div class="sr-card">
+        <h2>${L.markAtt}</h2>
+        ${total===0 ? emptyBlock('📋', L.emptyMembers) : `
+          <div id="srAttList">
+            ${state.members.map(m=>{
+              const val = attStatus(state.attRecord.presence[m.id]);
+              return `<div class="sr-att-row">
+                <div class="sr-avatar" style="width:32px;height:32px;font-size:12.5px;">${initials(m.name)}</div>
+                <div class="sr-member-info"><div class="sr-member-name">${esc(m.name)}</div><div class="sr-member-meta">${esc(m.dayitva||'—')}</div></div>
+                <div class="sr-toggle" role="group" aria-label="${esc(m.name)}">
+                  <button type="button" class="present ${val==='present'?'on':''}" data-att="${m.id}" data-val="present">${L.present}</button>
+                  <button type="button" class="absent ${val==='absent'?'on':''}" data-att="${m.id}" data-val="absent">${L.absent}</button>
+                  <button type="button" class="pravas ${val==='pravas'?'on':''}" data-att="${m.id}" data-val="pravas">${L.pravas}</button>
+                  <button type="button" class="anya ${val==='anya'?'on':''}" data-att="${m.id}" data-val="anya">${L.anya}</button>
+                </div>
+              </div>`;
+            }).join('')}
+          </div>
+          <div style="margin-top:14px;"><button class="sr-btn" id="srSaveAtt">${L.save}</button></div>
+          <p class="sr-note">${L.sharedNote}</p>
+        `}
+      </div>
+
+      <div class="sr-card">
+        <h2>${L.history}</h2>
+        ${state.historyDates.length===0 ? emptyBlock('🗓', L.emptyHistory) :
+          state.historyDates.map(d=>`
+            <button class="sr-history-item" data-histdate="${d}">
+              <span>${formatDate(d)}</span>
+              <span class="sr-history-badge" id="srBadge-${d}">…</span>
+            </button>
+          `).join('')}
+      </div>
+    `;
+
+    document.getElementById('srDatePick').addEventListener('change', async (e)=>{ state.attDate = e.target.value; await renderAttendance(); });
+    const gameSel = document.getElementById('srAttGame');
+    if(gameSel) gameSel.addEventListener('change', (e)=>{ state.attRecord.gameId = e.target.value || null; });
+    const subhSel = document.getElementById('srAttSubh');
+    if(subhSel) subhSel.addEventListener('change', (e)=>{ state.attRecord.subhashitamId = e.target.value || null; drawAttendance(); });
+
+    contentEl.querySelectorAll('[data-att]').forEach(b=>{
+      b.addEventListener('click', ()=>{
+        state.attRecord.presence[b.getAttribute('data-att')] = b.getAttribute('data-val');
+        drawAttendance();
+      });
+    });
+
+    const saveBtn = document.getElementById('srSaveAtt');
+    if(saveBtn) saveBtn.addEventListener('click', async ()=>{
+      saveBtn.disabled = true; saveBtn.textContent = L.saving;
+      const ok = await saveAttendanceRecord(state.attDate, state.attRecord);
+      saveBtn.disabled = false; saveBtn.textContent = L.save;
+      if(ok){ toast(tr().toast.attSaved); await loadHistoryDates(); refreshBadges(); }
+    });
+
+    contentEl.querySelectorAll('[data-histdate]').forEach(b=>b.addEventListener('click', async ()=>{ state.attDate = b.getAttribute('data-histdate'); await renderAttendance(); }));
+    contentEl.querySelectorAll('[data-goto]').forEach(b=>b.addEventListener('click', ()=> goToPage(b.getAttribute('data-goto'))));
+
+    refreshBadges();
+  }
+
+  async function refreshBadges(){
+    for(const d of state.historyDates){
+      const badge = document.getElementById('srBadge-'+d);
+      if(!badge) continue;
+      try{
+        const rec = await fetchAttendanceRecord(d);
+        const p = Object.values(rec.presence||{}).filter(v=>attStatus(v)==='present').length;
+        let extra = '';
+        if(rec.gameId) extra += ' 🤾';
+        if(rec.subhashitamId) extra += ' 📜';
+        badge.textContent = `${tr().att.badgePresent(p)}${extra}`;
+      }catch(e){ badge.textContent = '—'; }
+    }
+  }
+
+  // ---------- Seed data ----------
+  const seedGames = [
+    { name:'कबड्डी', type:'शारीरिक', description:'दो टोलियों के बीच खेला जाने वाला पारंपरिक संपर्क खेल, जिसमें एक खिलाड़ी सांस रोककर विपक्षी क्षेत्र में जाकर खिलाड़ियों को छूता है।' },
+    { name:'खो-खो', type:'शारीरिक', description:'दौड़ व फुर्ती का खेल — बचाव पक्ष के धावकों को पीछा करने वाली टोली "खो" देकर पकड़ने का प्रयास करती है।' },
+    { name:'मैं शिवाजी', type:'सामूहिक', description:'छत्रपति शिवाजी महाराज की वीरता से प्रेरित पकड़म-पकड़ाई का सामूहिक खेल।' },
+    { name:'काश्मीर हमारा है', type:'सामूहिक', description:'एक घेरे (काश्मीर) की रक्षा करते हुए बाहरी खिलाड़ियों को अंदर प्रवेश से रोकने का खेल, जो एकता व रक्षा भाव सिखाता है।' },
+    { name:'नेता की पहचान', type:'बौद्धिक', description:'समूह में से नेतृत्व क्षमता व सूझबूझ पहचानने हेतु खेला जाने वाला अवलोकन आधारित खेल।' },
+    { name:'लंगड़ी', type:'शारीरिक', description:'एक पैर पर उछल-कूद कर विपक्षी को छूने व संतुलन बनाए रखने का खेल।' },
+    { name:'अटया-पाटया', type:'शारीरिक', description:'रेखाओं से बने आयतों में फुर्ती व चपलता से पार होने का पारंपरिक भारतीय खेल।' },
+    { name:'सूर्य नमस्कार', type:'शारीरिक', description:'बारह आसनों की श्रृंखला — शरीर व मन दोनों को स्वस्थ रखने का नित्य अभ्यास।' },
+    { name:'दंड व लाठी व्यायाम', type:'शारीरिक', description:'दंड (बांस की छड़ी) से किए जाने वाले अनुशासित व्यायाम, जो एकाग्रता व शारीरिक दृढ़ता बढ़ाते हैं।' },
+    { name:'रस्साकशी', type:'सामूहिक', description:'दो टोलियों के बीच रस्सी खींचकर शक्ति व सहयोग की परीक्षा लेने वाला सामूहिक खेल।' },
+    { name:'सुदर्शन चक्र', type:'सामूहिक', description:'सभी स्वयंसेवक मंडलाकार में हाथ पकड़कर खड़े होते हैं; एक स्वयंसेवक बाहर रहता है और शिक्षक द्वारा बताए लक्ष्य तक पहुँचने का प्रयास करता है, शेष उसे रोकते हैं।' },
+    { name:'जमीन-आकाश-पानी', type:'बौद्धिक', description:'बैठा हुआ खेल — सभी स्वयंसेवक मंडलाकार बैठते हैं, केंद्र में खड़ा स्वयंसेवक किसी की ओर संकेत कर "जमीन", "आकाश" या "पानी" बोलता है और तुरंत संबंधित प्राणी का नाम बताना होता है। सतर्कता व त्वरित निर्णय क्षमता बढ़ाता है।' },
+    { name:'कंधे से धकेलना', type:'शारीरिक', description:'द्वन्द्व का खेल — एक मीटर त्रिज्या के घेरे में दो खिलाड़ी आमने-सामने खड़े होकर केवल कंधे से एक-दूसरे को घेरे से बाहर धकेलने का प्रयास करते हैं।' },
+    { name:'आह्वान कबड्डी', type:'सामूहिक', description:'दो दल 17-20 मीटर की दूरी पर खिंची रेखाओं पर आमने-सामने खड़े रहते हैं और चुनौती देकर विपक्षी खिलाड़ी को अपनी सीमा में बुलाते हैं — कबड्डी का एक रोचक रूप।' },
+    { name:'संख्या बनाना', type:'बौद्धिक', description:'8-10 सदस्यों के दो या तीन दल बनाए जाते हैं; शिक्षक द्वारा बताई गई संख्या के अनुसार दल के सदस्यों को शीघ्रता से समूह बनाना होता है। त्वरित गणना व सहयोग का अभ्यास।' },
+    { name:'सीधी दौड़', type:'शारीरिक', description:'प्रारंभ रेखा से निर्धारित स्थान तक सीधी दौड़ लगाकर सबसे पहले पहुँचने का सरल किन्तु प्रभावी दौड़ खेल।' },
+    { name:'गेंद (रुमाल गेंद)', type:'अन्य', description:'साधन का खेल — दो दल बनाकर रुमाल को गेंद की तरह लपेटकर अपने ही दल के खिलाड़ियों के बीच पास करते हुए विपक्षी दल से बचाना होता है।' },
+    { name:'भोंवरा (लट्टू)', type:'अन्य', description:'डोरी से लट्टू घुमाने का पारंपरिक खेल; एकाग्रता व हाथ-नियंत्रण का अभ्यास कराता है।' },
+    { name:'शृंखला (चेन) दौड़', type:'सामूहिक', description:'निर्धारित संख्या में स्वयंसेवक एक साथ हाथ पकड़कर दौड़ते व दिशा बदलते हैं; समन्वय व सामूहिक गति का अभ्यास।' },
+    { name:'रुमाल चोर', type:'सामूहिक', description:'मंडलाकार में बैठे या खड़े स्वयंसेवकों के बीच से रुमाल चुराकर बिना पकड़े जाए अपने स्थान तक पहुँचाने का फुर्ती व चतुराई का खेल।' },
+    { name:'स्मरण-श्रृंखला', type:'बौद्धिक', description:'सभी खिलाड़ी बारी-बारी से एक शब्द जोड़कर पिछली पूरी श्रृंखला दोहराते हैं। स्मरण शक्ति, ध्यान और सुनने का अभ्यास होता है।' },
+    { name:'दिशा पहचान', type:'शारीरिक', description:'शिक्षक के संकेत पर खिलाड़ी दाएँ, बाएँ, आगे या पीछे निर्धारित कदम लेते हैं। ध्यान, प्रतिक्रिया और दिशा-बोध का अभ्यास करें।' },
+    { name:'वृत्त परिवर्तन', type:'सामूहिक', description:'खिलाड़ी छोटे वृत्त में खड़े होते हैं और संकेत मिलने पर तय नियम के अनुसार स्थान बदलते हैं। इसे सुरक्षित जगह और स्पष्ट सीमाओं के साथ खेलें।' },
+    { name:'संकेत और प्रतिक्रिया', type:'बौद्धिक', description:'शिक्षक के बताए संकेत पर खिलाड़ी तय क्रिया करते हैं; गलत या देर से प्रतिक्रिया देने वाले को अगली बारी में संकेत देने का अवसर मिलता है।' },
+    { name:'जोड़ी समन्वय दौड़', type:'सामूहिक', description:'जोड़ी बनाकर हल्की गति से निर्धारित दूरी तय करें और आपसी तालमेल बनाए रखें। टक्कर से बचने के लिए पर्याप्त जगह रखें।' }
+  ];
+  const seedSubhashitam = [
+    { sanskrit:'विद्या ददाति विनयं विनयाद्याति पात्रताम्।\nपात्रत्वाद्धनमाप्नोति धनाद्धर्मं ततः सुखम्॥', meaning:'विद्या विनय देती है, विनय से योग्यता आती है, योग्यता से धन मिलता है, धन से धर्म और धर्म से सुख की प्राप्ति होती है।', source:'हितोपदेश' },
+    { sanskrit:'उद्यमेन हि सिध्यन्ति कार्याणि न मनोरथैः।\nन हि सुप्तस्य सिंहस्य प्रविशन्ति मुखे मृगाः॥', meaning:'कार्य परिश्रम से सिद्ध होते हैं, केवल इच्छा करने से नहीं। सोए हुए सिंह के मुख में हिरण स्वयं नहीं आते।', source:'हितोपदेश' },
+    { sanskrit:'अयं निजः परो वेति गणना लघुचेतसाम्।\nउदारचरितानां तु वसुधैव कुटुम्बकम्॥', meaning:'यह अपना है, यह पराया — ऐसा भेद संकुचित मन वालों की सोच है। उदार हृदय वालों के लिए तो सारी पृथ्वी ही एक परिवार है।', source:'महोपनिषद्' },
+    { sanskrit:'सत्यमेव जयते नानृतम्।', meaning:'सत्य की ही सदा विजय होती है, असत्य की नहीं।', source:'मुण्डक उपनिषद्' },
+    { sanskrit:'परोपकाराय सतां विभूतयः।', meaning:'सज्जनों की समृद्धि व सामर्थ्य दूसरों की भलाई के लिए ही होती है।', source:'सुभाषितम्' },
+    { sanskrit:'मातृदेवो भव। पितृदेवो भव। आचार्यदेवो भव। अतिथिदेवो भव॥', meaning:'माता, पिता, आचार्य और अतिथि — इन सभी को देवता के समान मानो और उनका आदर करो।', source:'तैत्तिरीय उपनिषद्' },
+    { sanskrit:'श्रमेव जयते।', meaning:'परिश्रम की ही सदा विजय होती है।', source:'सुभाषितम्' },
+    { sanskrit:'न चोरहार्यं न च राजहार्यं न भ्रातृभाज्यं न च भारकारी।\nव्यये कृते वर्धत एव नित्यं विद्याधनं सर्वधनप्रधानम्॥', meaning:'विद्या ऐसा धन है जिसे चोर चुरा नहीं सकता, राजा छीन नहीं सकता और बाँटने पर भी यह घटता नहीं; इसका उपयोग करने से यह बढ़ता है।', source:'परंपरागत सुभाषितम्' },
+    { sanskrit:'आ नो भद्राः क्रतवो यन्तु विश्वतः।', meaning:'हमारे पास सभी दिशाओं से कल्याणकारी विचार आएँ।', source:'ऋग्वेद 1.89.1' },
+    { sanskrit:'संगच्छध्वं संवदध्वं सं वो मनांसि जानताम्।', meaning:'मिलकर चलें, मिलकर संवाद करें और हमारे मनों में सामंजस्य हो।', source:'ऋग्वेद 10.191.2' }
+  ];
+  const seedAmritVachan = [
+    { text:'शाखा में खेले जाने वाले खेल केवल शारीरिक गतिविधियाँ नहीं, बल्कि टीमवर्क, नेतृत्व, सजगता और अनुशासन विकसित करने का माध्यम भी हैं।', author:'राष्ट्रीय स्वयंसेवक संघ की वेबसाइट', context:'शाखा में खेलों के महत्व पर', sourceUrl:'https://hindi.rss.org/Encyc/2026/9/30/how-are-sanghs-ideas-reflected-on-ground.html' },
+    { text:'दैनिक शाखा में शारीरिक व्यायाम, खेल, देशभक्ति गीत, राष्ट्रहित के विषयों पर चर्चा और मातृभूमि की प्रार्थना जैसे कार्यक्रम होते हैं।', author:'राष्ट्रीय स्वयंसेवक संघ की वेबसाइट', context:'दैनिक शाखा के कार्यक्रमों का सार', sourceUrl:'https://www.rss.org/hindi/Encyc/2015/6/23/faq-on-rss-hindi.html' },
+    { text:'शाखा में स्वयंसेवकों के व्यक्तित्व, कर्तृत्व, नेतृत्व, भक्ति और समझदारी के विकास पर बल दिया जाता है।', author:'राष्ट्रीय स्वयंसेवक संघ की वेबसाइट', context:'व्यक्तित्व निर्माण पर', sourceUrl:'https://www.rss.org/hindi/Encyc/2025/10/2/sarsanghchalaj-jis-speech.html' },
+    { text:'उठो, जागो और तब तक मत रुको जब तक लक्ष्य प्राप्त न हो जाए।', author:'स्वामी विवेकानंद', context:'कर्तव्यनिष्ठा व दृढ़ संकल्प पर' },
+    { text:'विद्या, विनय और सतत परिश्रम व्यक्ति के विकास के महत्वपूर्ण आधार हैं।', author:'संग्रह हेतु संपादकीय सार', context:'अध्ययन और चरित्र निर्माण पर' }
+  ];
+
+  async function seedDefaultsIfEmpty(){
+    // Games: additive by name, so re-running after an update adds newly introduced games
+    // without duplicating ones already saved/edited by the user.
+    const existingGameNames = new Set(state.games.map(g=>g.name));
+    let gamesChanged = false;
+    for(const g of seedGames){
+      if(!existingGameNames.has(g.name)){
+        state.games.push({ id: uid('g'), ...g });
+        existingGameNames.add(g.name);
+        gamesChanged = true;
+      }
+    }
+    if(gamesChanged) await saveList('games', state.games);
+
+    // Add starter content by unique text, preserving existing user-created entries.
+    const existingSubhashitam = new Set(state.subhashitam.map(x => (x.sanskrit || '').replace(/\s+/g,' ').trim()));
+    let subhashitamChanged = false;
+    for(const item of seedSubhashitam){
+      const key = item.sanskrit.replace(/\s+/g,' ').trim();
+      if(!existingSubhashitam.has(key)){
+        state.subhashitam.push({ id: uid('s'), ...item });
+        existingSubhashitam.add(key); subhashitamChanged = true;
+      }
+    }
+    if(subhashitamChanged) await saveList('subhashitam', state.subhashitam);
+
+    const existingAmrit = new Set(state.amritvachan.map(x => (x.text || '').replace(/\s+/g,' ').trim()));
+    let amritChanged = false;
+    for(const item of seedAmritVachan){
+      const key = item.text.replace(/\s+/g,' ').trim();
+      if(!existingAmrit.has(key)){
+        state.amritvachan.push({ id: uid('av'), ...item });
+        existingAmrit.add(key); amritChanged = true;
+      }
+    }
+    if(amritChanged) await saveList('amritvachan', state.amritvachan);
+  }
+
+  // ---------- Wiring ----------
+  document.getElementById('srHamburger').addEventListener('click', openMobileSidebar);
+  document.getElementById('srSidebarClose').addEventListener('click', closeMobileSidebar);
+  overlayEl.addEventListener('click', closeMobileSidebar);
+
+  // ---------- Init ----------
+  (async function init(){
+    try{
+      buildNav();
+      state.members = await loadList('members');
+      state.games = await loadList('games');
+      state.subhashitam = await loadList('subhashitam');
+      state.amritvachan = await loadList('amritvachan');
+      state.pravas = await loadList('pravas');
+      await seedDefaultsIfEmpty();
+      await loadSettings();
+      updateSidebarHead();
+      updateSidebarOrgBox();
+      await goToPage('dashboard');
+    }catch(err){
+      contentEl.innerHTML = emptyBlock('⚠️','Problem loading data. Please reload the page. / डेटा लोड करने में समस्या हुई। कृपया पेज रीलोड करें।');
+    }
+  })();
+})();
+</script>
+</body>
+</html>
